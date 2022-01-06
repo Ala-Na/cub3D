@@ -1,11 +1,18 @@
 #include <math.h>
 
+//TODO #define PIXEL_BY_TILE
+#define FOV 60
+#define PI 3.1415926535
+//TODO Define move value : #define MOVE 1/3 * TILE
+
+
+//IDEA Use double instead of float ?
 typedef struct  s_player
 {
     float   x; //x's player position
     float   y; //y's player position
     float   angle; //player view center angle orientation
-    int     field_view; //fixed value corresponding to the length of field view, set to 60
+    int     fov; //fixed value corresponding to the length of field of view (FOV), set to 60
 }   t_player;
 
 typedef struct  s_ray
@@ -32,3 +39,14 @@ typedef struct s_moves
     float   pos_mod; //value to add or substract to x or y on map
     float   ang_mod; //value to add to angle to move point of view horizontally
 };
+
+int main()
+{
+    t_player    player;
+
+    player->x = 10;
+    player->y = 10;
+    player->angle = 0;
+    player->fov = FOV;
+    return (0);
+}

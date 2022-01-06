@@ -1,2 +1,2 @@
 # cub3D
-CubD project for 42's school
+Cub3D project for 42's school

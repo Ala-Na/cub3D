@@ -5,6 +5,9 @@
 
 //TODO, define defqult screen width and height, default texture dimensions
 #define PI 3.1415926535
+#define SCREEN_WIDTH 300
+#define SCREEN_HEIGHT 250
+#define PITCH 100 //May be modified for jump/crunch ?
 //TODO Define move value : #define MOVE 1/3 * TILE
 
 //Struct for 2D vector of doubles values
@@ -39,12 +42,35 @@ typedef struct  s_ray
     t_ivec  step; //direction of ray vector on x/y, either +1 or -1
 }   t_ray;
 
-void    calculate_wall_height(int side, t_ray *ray)
+int calculate_wall_height(int side, t_ray *ray)
 {
-    if 
+    int height;
+
+    if (side == 0)
+        ray->wall_dist = ray->side_dist->x - ray->delta_dist->x;
+    else
+        ray->wall_dist = ray->side_dist->y - ray->delta_dist->y;
+    height = (int)(SCREEN_HEIGHT / ray->wall_dist);
+    return height;
 }
 
-int dda_algorithm(t_ray *ray)
+void    show_textured_wall(int side, t_ray *ray)
+{
+    int wall_height;
+    int low_pixel;
+    int hight_pixel;
+
+    wall_height = calculate_wall_height(side, ray);
+    //Searching lowest and highest pixel on current wall stripe to draw
+    low_pixel = wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
+    if (low_pixel >= SCREEN_HEIGHT)
+        low_pixel = SCREEN_HEIGHT - 1;
+    hight_pixel = -wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
+    if (hight_pixel < 0)
+        hight_pixel = 0;
+}
+
+int dda_algorithm(t_ray *ray) //need map
 {
     bool    hit;
     int     side;
@@ -70,7 +96,7 @@ int dda_algorithm(t_ray *ray)
     return side;
 }
 
-int    dda(t_player player, t_ray *ray)
+int    dda(t_player player, t_ray *ray) //need map
 {
     bool    hit;
     bool    side;
@@ -98,7 +124,7 @@ int    dda(t_player player, t_ray *ray)
     return dda_algorithm(ray);
 }
 
-void    raycasting_algorithm(t_player *player)
+void    raycasting_algorithm(t_player *player) //need map
 {
     int     i;
     t_ray   ray;
@@ -119,7 +145,7 @@ void    raycasting_algorithm(t_player *player)
         else
             ray.delta_dist->y = abs(1 / ray->dir->y);
         side = dda(player, &ray);
-        calculate_wall_height(side, &ray);
+        show_textured_wall(side, &ray);
     }
 }
 

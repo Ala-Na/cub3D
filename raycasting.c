@@ -7,6 +7,8 @@
 #define PI 3.1415926535
 #define SCREEN_WIDTH 300
 #define SCREEN_HEIGHT 250
+#define TEXTURE_WIDTH 64
+#define TEXTURE_HEIGHT 64
 #define PITCH 100 //May be modified for jump/crunch ?
 //TODO Define move value : #define MOVE 1/3 * TILE
 
@@ -42,32 +44,85 @@ typedef struct  s_ray
     t_ivec  step; //direction of ray vector on x/y, either +1 or -1
 }   t_ray;
 
+typedef struct  s_stripe
+{
+    int     texture_number; //number of texture / corresponding texture
+    int     high_pixel;
+    int     low_pixel;
+    t_ivec  hit_coord; //vector with x and y coordinate hit by ray
+    double  pos;
+}   t_stripe;
+
+
+void    show_textured_wall(int screen_x, t_stripe *stripe, int wall_height, int side)
+{
+    double          scale; //scaling/increase texture to screen scale
+    int             screen_y;
+    unsigned int    pixel_color; //Must be a Uint32 (unsigned int of 32 bits max)
+
+    scale = 1.0 * TEXTURE_HEIGHT / wall_height;
+    stripe->pos = (strip->high_pixel - PITCH - SCREEN_HEIGHT / 2 + wall_height / 2) * scale;
+    screen_y = stripe->hight_pixel;
+    while (screen_y < stripe->low_pixel)
+    {
+        stripe->hit_coord->y = (int)(stripe->pos) & (TEXTURE_HEIGHT - 1); // masking in case of overflow
+        stripe->pos += scale;
+        //TODO pixel_color = texture[stripe->texture_number][TEXTURE_HEIGHT * strip->hit_coord->y + strip->hit_coord->x];
+        //Make color darker for y-sides
+        //if (side == 1)
+        //  pixel_color = (color >> 1) & 8355711;
+        //TODO either stock pixel color in a buffer with buffer[screen_x][screen_y] = pixel color, or display pixel to screen_x/screen_y coordinates
+        screen_y++;
+    }
+    
+}
+
+int    get_texture_x_coordinate(int side, t_player *player, t_ray *ray) //need texture
+{
+    double  wall_hit_x; //x coordinate where wall was hit
+    int     texture_hit_x; //corresponding x value where it should be hit
+
+    if (side == 0) //wall was hit on x axis first
+        wall_hit_x = player->pos->y + ray->wall_dist * ray->dir->y;
+    else // wall was hit on y axis
+        wall_hit_x = player->pos->x + ray->wall_dist * ray->dir->x;
+    wall_hit_x -= floor((wall_hit_x)); //we substract the integer value rounded down to the nearest integer
+    texture_hit_x = (int)(wall_hit_x * double(TEXTURE_WIDTH));
+    if (side == 0 && ray->dir->x > 0)
+        texture_hit_x = TEXTURE_WIDTH - texture_hit_x - 1;
+    if (side == 1 && ray->dir->y < 0)
+        texture_hit_x = TEXTURE_WIDTH - texture_hit_x - 1;
+    return texture_hit_x;
+}
+
 int calculate_wall_height(int side, t_ray *ray)
 {
     int height;
 
-    if (side == 0)
+    if (side == 0) //wall was hit on x axis
         ray->wall_dist = ray->side_dist->x - ray->delta_dist->x;
-    else
+    else //wall was hit on y axis
         ray->wall_dist = ray->side_dist->y - ray->delta_dist->y;
     height = (int)(SCREEN_HEIGHT / ray->wall_dist);
     return height;
 }
 
-void    show_textured_wall(int side, t_ray *ray)
+void    get_textured_wall(int screen_x, int side, t_player, *player, t_ray *ray)
 {
-    int wall_height;
-    int low_pixel;
-    int hight_pixel;
+    int         wall_height;
+    t_stripe    stripe;
 
     wall_height = calculate_wall_height(side, ray);
     //Searching lowest and highest pixel on current wall stripe to draw
-    low_pixel = wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
-    if (low_pixel >= SCREEN_HEIGHT)
-        low_pixel = SCREEN_HEIGHT - 1;
-    hight_pixel = -wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
-    if (hight_pixel < 0)
-        hight_pixel = 0;
+    stripe.low_pixel = wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
+    if (stripe.low_pixel >= SCREEN_HEIGHT)
+        stripe.low_pixel = SCREEN_HEIGHT - 1;
+    stripe.hight_pixel = -wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
+    if (stripe.hight_pixel < 0)
+        stripe.hight_pixel = 0;
+    //TODO add algo to seek corresponding texture (using side ?)
+    stripe.hit_coord->x = get_texture_x_coordinate(side, player, ray);
+    show_textured_wall(screen_x, &stripe, wall_height, side);
 }
 
 int dda_algorithm(t_ray *ray) //need map
@@ -126,14 +181,14 @@ int    dda(t_player player, t_ray *ray) //need map
 
 void    raycasting_algorithm(t_player *player) //need map
 {
-    int     i;
+    int     screen_x;
     t_ray   ray;
 
     ray.box->x = (int)player->pos->x;
     ray.box->y = (int)player->pos->y;
-    while (i < SCREEN_WIDTH) //We travel through the screen width
+    while (screen_x < SCREEN_WIDTH) //We travel through the screen width
     {
-        ray.cam_pos_x = 2 * i / (double)SCREEN_WIDTH - 1;
+        ray.cam_pos_x = 2 * screen_x / (double)SCREEN_WIDTH - 1;
         ray.dir_ray->x = player->dir->x + player->cam_plane->x * ray.cam_pos_x;
         ray.dir_ray->y = player->dir->y + player->cam_plane->y * ray.cam_pos_x;
         if (ray.dir->x == 0)
@@ -145,7 +200,8 @@ void    raycasting_algorithm(t_player *player) //need map
         else
             ray.delta_dist->y = abs(1 / ray->dir->y);
         side = dda(player, &ray);
-        show_textured_wall(side, &ray);
+        get_textured_wall(screen_x, side, player, &ray);
+        screen_x++;
     }
 }
 

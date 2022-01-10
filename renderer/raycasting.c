@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/10 16:22:08 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:24:10 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void    show_textured_wall(void *mlx, void *img, char *buffer, int size_line, in
         pixel_color =  mlx_get_color_value(mlx, 0xABCDEF);//FIXME test value
         //TODO pixel_color = texture[stripe->texture_number][TEXTURE_HEIGHT * strip->hit_coord->y + strip->hit_coord->x];
         //Make color darker for y-sides
-        //if (side == 1)
-        //  pixel_color = (color >> 1) & 8355711;
+        if (side == 1)
+            pixel_color = (pixel_color >> 1) & 8355711;
         //TODO either stock pixel color in a buffer with buffer[screen_x][screen_y] = pixel color, or display pixel to screen_x/screen_y coordinates 
         buffer[(screen_y * size_line) + screen_x] = pixel_color; 
         screen_y++;

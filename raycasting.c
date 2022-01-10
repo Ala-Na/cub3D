@@ -219,6 +219,15 @@ void    raycasting_algorithm(t_player *player) //need map
     }
 }
 
+void    draw_view(void)
+{
+    void    *mlx;
+    void    *img;
+
+    mlx = mlx_init();
+    img = mlx_new_image(mlx, SCREEN)
+}
+
 int main()
 {
     t_player    player;

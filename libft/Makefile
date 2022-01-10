@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hlichir <hlichir@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/26 11:25:33 by anadege           #+#    #+#              #
-#    Updated: 2021/10/26 15:38:53 by anadege          ###   ########.fr        #
+#    Updated: 2022/01/10 16:29:24 by fmonbeig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,6 +96,7 @@ SUB_SRCS_MEM =						\
 SUB_SRCS_STR_UTILS =				\
 		  ft_atoi.c					\
 		  ft_split.c				\
+		  ft_free_split.c				\
 		  ft_strdup.c				\
 		  ft_strdup_free.c			\
 		  ft_strchr.c				\

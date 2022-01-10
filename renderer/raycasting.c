@@ -6,13 +6,15 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/10 16:02:05 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:22:08 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer.h"
+#include <stdio.h>
 
-//TO TEST : gcc ./renderer/raycasting.c -L minilibx-linux -lmlx -lXext -lX11 - libft
+//TO TEST : gcc ./renderer/raycasting.c -L minilibx-linux -lmlx -lXext -lX11 - libft -g
+// gcc ./renderer/raycasting.c ./minilibx-linux/libmlx.a ./minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm -L libft -g
 
 void    show_textured_wall(void *mlx, void *img, char *buffer, int size_line, int screen_x, t_stripe *stripe, int wall_height, int side)
 {
@@ -32,7 +34,7 @@ void    show_textured_wall(void *mlx, void *img, char *buffer, int size_line, in
         //Make color darker for y-sides
         //if (side == 1)
         //  pixel_color = (color >> 1) & 8355711;
-        //TODO either stock pixel color in a buffer with buffer[screen_x][screen_y] = pixel color, or display pixel to screen_x/screen_y coordinates
+        //TODO either stock pixel color in a buffer with buffer[screen_x][screen_y] = pixel color, or display pixel to screen_x/screen_y coordinates 
         buffer[(screen_y * size_line) + screen_x] = pixel_color; 
         screen_y++;
     }
@@ -101,7 +103,7 @@ void    get_textured_wall(void *mlx, void *img, char *buffer, int size_line, int
     show_textured_wall(mlx, img, buffer, size_line, ray->screen_x, &stripe, wall_height, side);
 }
 
-int dda_algorithm(int map[][], t_ray *ray)
+int dda_algorithm(int map[24][24], t_ray *ray)
 {
     bool    hit;
     int     side;
@@ -121,13 +123,15 @@ int dda_algorithm(int map[][], t_ray *ray)
             ray->box.y += ray->step.y;
             side = 1;
         }
-        if (map[ray->box.x][ray->box.y] != 0)
+        if (map[ray->box.x][ray->box.y] > 0)
+        {
             hit = true;
+        }
     }
     return side;
 }
 
-int    dda(int map[][], t_player *player, t_ray *ray)
+int    dda(int map[24][24], t_player *player, t_ray *ray)
 {
     bool    hit;
     bool    side;
@@ -155,16 +159,16 @@ int    dda(int map[][], t_player *player, t_ray *ray)
     return dda_algorithm(map, ray);
 }
 
-void    raycasting_algorithm(void *mlx, void *img, char *buffer, int size_line, int map[][], t_player *player)
+void    raycasting_algorithm(void *mlx, void *img, char *buffer, int size_line, int map[24][24], t_player *player)
 {
     t_ray   ray;
     int     side;
 
     ray.screen_x = 0;
-    ray.box.x = (int)player->pos.x;
-    ray.box.y = (int)player->pos.y;
     while (ray.screen_x < SCREEN_WIDTH) //We travel through the screen width
     {
+        ray.box.x = (int)player->pos.x;
+        ray.box.y = (int)player->pos.y;
         ray.cam_pos_x = 2 * ray.screen_x / (double)SCREEN_WIDTH - 1;
         ray.dir.x = player->dir.x + player->cam_plane.x * ray.cam_pos_x;
         ray.dir.y = player->dir.y + player->cam_plane.y * ray.cam_pos_x;
@@ -182,7 +186,7 @@ void    raycasting_algorithm(void *mlx, void *img, char *buffer, int size_line, 
     }
 }
 
-void    draw_view(int map[][], t_player *player) //FIXME test function only
+void    draw_view(int map[24][24], t_player *player) //FIXME test function only
 {
     void    *mlx;
     void    *win;
@@ -201,7 +205,7 @@ void    draw_view(int map[][], t_player *player) //FIXME test function only
     buffer = mlx_get_data_addr(img, &bits_per_pixel, &size_line, &endian);
     raycasting_algorithm(mlx, img, buffer, size_line, map, player);
     mlx_put_image_to_window(mlx, win, img, 0, 0);
-    usleep(1000); //FIXME Forbidden function for mandatory, test purpose only
+    sleep(5); //FIXME Forbidden function for mandatory, test purpose only
     mlx_destroy_image(mlx, img);
     mlx_destroy_window(mlx, win);
     mlx_destroy_display(mlx);

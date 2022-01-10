@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/10 15:53:10 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:21:12 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <X11/X.h>
 
 # define PI 3.1415926535
-# define SCREEN_WIDTH 300
-# define SCREEN_HEIGHT 250
+# define SCREEN_WIDTH 1200
+# define SCREEN_HEIGHT 1000
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
 # define PITCH 100 //May be modified for jump/crunch ?

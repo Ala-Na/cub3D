@@ -225,7 +225,8 @@ void    draw_view(void)
     void    *img;
 
     mlx = mlx_init();
-    img = mlx_new_image(mlx, SCREEN)
+    img = mlx_new_image(mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
 }
 
 int main()

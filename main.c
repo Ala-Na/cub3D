@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/07 18:03:16 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/10 17:58:02 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	init_data(t_data *data)
 {
+	data->map = 0;
 	data->map_info.player_orientation = 0;
 	data->map_info.player_height = 0;
 	data->map_info.player_width = 0;
+	data->texture.no_file = 0;
+	data->texture.so_file = 0;
+	data->texture.we_file = 0;
+	data->texture.ea_file = 0;
+	data->texture.temp = 0;
 }
 
 int	main(int argc, char **argv)
@@ -34,6 +40,4 @@ int	main(int argc, char **argv)
 }
 
 //	perror("ERROR"); Permet de prnt avec ERROR au debut
-//	utiliser une liste chainée pour stocker tous nos malloc ? // on utilise un calloc dans lequel on copie l'adresse du pointeur dans une liste chainée afin de tout free a la fin.
-//	Est ce qu on utilise un type def t_bool pour les fonctions booleenne ?
 //	Est ce qu on utilise calloc au lieu de malloc ?

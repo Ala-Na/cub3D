@@ -6,15 +6,17 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/10 16:24:10 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/10 18:51:46 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer.h"
 #include <stdio.h>
+#define I 24
+#define J 24
 
-//TO TEST : gcc ./renderer/raycasting.c -L minilibx-linux -lmlx -lXext -lX11 - libft -g
-// gcc ./renderer/raycasting.c ./minilibx-linux/libmlx.a ./minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm -L libft -g
+//TO TEST : gcc ./renderer/raycasting.c -Lminilibx-linux/ -lmlx -lXext -lX11 -lm -L libft -g
+
 
 void    show_textured_wall(void *mlx, void *img, char *buffer, int size_line, int screen_x, t_stripe *stripe, int wall_height, int side)
 {
@@ -25,17 +27,18 @@ void    show_textured_wall(void *mlx, void *img, char *buffer, int size_line, in
     scale = 1.0 * TEXTURE_HEIGHT / wall_height;
     stripe->pos = (stripe->high_pixel - PITCH - SCREEN_HEIGHT / 2 + wall_height / 2) * scale;
     screen_y = stripe->high_pixel;
+    //printf("x: %i, y: %i - %i\n", screen_x, stripe->high_pixel, stripe->low_pixel);
     while (screen_y < stripe->low_pixel)
     {
         stripe->hit_coord.y = (int)(stripe->pos) & (TEXTURE_HEIGHT - 1); // masking in case of overflow
         stripe->pos += scale;
-        pixel_color =  mlx_get_color_value(mlx, 0xABCDEF);//FIXME test value
+        pixel_color =  mlx_get_color_value(mlx, 0xABCDEF);//FIXME test value, light blue
         //TODO pixel_color = texture[stripe->texture_number][TEXTURE_HEIGHT * strip->hit_coord->y + strip->hit_coord->x];
         //Make color darker for y-sides
         if (side == 1)
             pixel_color = (pixel_color >> 1) & 8355711;
         //TODO either stock pixel color in a buffer with buffer[screen_x][screen_y] = pixel color, or display pixel to screen_x/screen_y coordinates 
-        buffer[(screen_y * size_line) + screen_x] = pixel_color; 
+        *(buffer + (screen_y * size_line) + (screen_x * 32 / 8)) = pixel_color;
         screen_y++;
     }
 }
@@ -67,8 +70,10 @@ int calculate_wall_height(int side, t_ray *ray)
     else //wall was hit on y axis
         ray->wall_dist = ray->side_dist.y - ray->delta_dist.y;
     height = (int)(SCREEN_HEIGHT / ray->wall_dist);
+    //printf("%i\n", height);
     return height;
 }
+
  /* TODO decomment this function and add textures
 int get_texture_number(int side, t_player *player, t_ray *ray)
 {
@@ -103,7 +108,7 @@ void    get_textured_wall(void *mlx, void *img, char *buffer, int size_line, int
     show_textured_wall(mlx, img, buffer, size_line, ray->screen_x, &stripe, wall_height, side);
 }
 
-int dda_algorithm(int map[24][24], t_ray *ray)
+int dda_algorithm(int map[I][J], t_ray *ray)
 {
     bool    hit;
     int     side;
@@ -124,14 +129,12 @@ int dda_algorithm(int map[24][24], t_ray *ray)
             side = 1;
         }
         if (map[ray->box.x][ray->box.y] > 0)
-        {
             hit = true;
-        }
     }
     return side;
 }
 
-int    dda(int map[24][24], t_player *player, t_ray *ray)
+int    dda(int map[I][J], t_player *player, t_ray *ray)
 {
     bool    hit;
     bool    side;
@@ -159,7 +162,7 @@ int    dda(int map[24][24], t_player *player, t_ray *ray)
     return dda_algorithm(map, ray);
 }
 
-void    raycasting_algorithm(void *mlx, void *img, char *buffer, int size_line, int map[24][24], t_player *player)
+void    raycasting_algorithm(void *mlx, void *img, char *buffer, int size_line, int map[I][J], t_player *player)
 {
     t_ray   ray;
     int     side;
@@ -186,7 +189,7 @@ void    raycasting_algorithm(void *mlx, void *img, char *buffer, int size_line, 
     }
 }
 
-void    draw_view(int map[24][24], t_player *player) //FIXME test function only
+void    draw_view(int map[I][J], t_player *player) //FIXME test function only
 {
     void    *mlx;
     void    *win;
@@ -205,7 +208,7 @@ void    draw_view(int map[24][24], t_player *player) //FIXME test function only
     buffer = mlx_get_data_addr(img, &bits_per_pixel, &size_line, &endian);
     raycasting_algorithm(mlx, img, buffer, size_line, map, player);
     mlx_put_image_to_window(mlx, win, img, 0, 0);
-    sleep(5); //FIXME Forbidden function for mandatory, test purpose only
+    sleep(4); //FIXME Forbidden function for mandatory, test purpose only
     mlx_destroy_image(mlx, img);
     mlx_destroy_window(mlx, win);
     mlx_destroy_display(mlx);
@@ -240,11 +243,15 @@ int main()
     {1,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,1,0,0,0,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
+/*
+    int map[5][5] = {{1,1,1,1,1},{1,0,0,0,1},{1,0,0,0,1},{1,0,0,0,1},{1,1,1,1,1}};
+    */
     t_player    player;
 
+
     //In this example, player is directed towards West
-    player.pos.x = 10.0;
-    player.pos.y = 5.0;
+    player.pos.x = 22.0;
+    player.pos.y = 11.5;
     player.dir.x = -1.0;
     player.dir.y = 0.0;
     player.cam_plane.x = 0.0;

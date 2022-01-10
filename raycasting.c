@@ -107,6 +107,19 @@ int calculate_wall_height(int side, t_ray *ray)
     return height;
 }
 
+int get_texture_number(int side, t_player *player, t_ray *ray)
+{
+    if (side == 1) //wall hited on y axis
+    {
+        if (player->dir->y > 0)
+            return //NORTH TEXTURE;
+        return //SOUTH TEXTURE;
+    }
+    if (player->dir->x > 0)
+        return //EST TEXTURE;
+    return //WEST TEXTURE;
+}
+
 void    get_textured_wall(int screen_x, int side, t_player, *player, t_ray *ray)
 {
     int         wall_height;
@@ -120,7 +133,7 @@ void    get_textured_wall(int screen_x, int side, t_player, *player, t_ray *ray)
     stripe.hight_pixel = -wall_height / 2 + SCREEN_HEIGHT / 2 + PITCH;
     if (stripe.hight_pixel < 0)
         stripe.hight_pixel = 0;
-    //TODO add algo to seek corresponding texture (using side ?)
+    stripe.texture_number = get_texture_number(side, player, ray);
     stripe.hit_coord->x = get_texture_x_coordinate(side, player, ray);
     show_textured_wall(screen_x, &stripe, wall_height, side);
 }
@@ -182,6 +195,7 @@ int    dda(t_player player, t_ray *ray) //need map
 void    raycasting_algorithm(t_player *player) //need map
 {
     int     screen_x;
+    int     side;
     t_ray   ray;
 
     ray.box->x = (int)player->pos->x;

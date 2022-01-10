@@ -1,6 +1,16 @@
-#include <math.h>
-#define MOVE 1.0/3.0
-#define ROTATE (PI / 8.0) //1/6 de quart de cercle en radian
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/10 14:33:27 by anadege           #+#    #+#             */
+/*   Updated: 2022/01/10 14:33:28 by anadege          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "renderer.h"
 
 void    move_foward(t_player *player)
 {

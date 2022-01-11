@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 16:26:16 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/11 21:05:53 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int calculate_wall_height(t_ray *ray)
     return height;
 }
 
-int dda_algorithm(t_ray *ray, int map[I][J])
+int dda_algorithm(t_ray *ray, char **map)
 {
     bool    hit;
     int     side;
@@ -45,13 +45,13 @@ int dda_algorithm(t_ray *ray, int map[I][J])
             ray->box.y += ray->step.y;
             side = 1;
         }
-        if (map[ray->box.x][ray->box.y] > 0)
+        if (map[ray->box.y][ray->box.x] > '0')
             hit = true;
     }
     return side;
 }
 
-int    dda(t_player *player, t_ray *ray, int map[I][J])
+int    dda(t_player *player, t_ray *ray, char **map)
 {
     if (ray->dir.x < 0)
     {
@@ -76,7 +76,7 @@ int    dda(t_player *player, t_ray *ray, int map[I][J])
     return dda_algorithm(ray, map);
 }
 
-void    raycasting_algorithm(t_img *img, t_player *player, int map[I][J])
+void    raycasting_algorithm(t_img *img, t_player *player, char **map)
 {
     t_ray   ray;
     int     side;

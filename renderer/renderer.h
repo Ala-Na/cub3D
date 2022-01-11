@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 17:48:14 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/11 21:47:16 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 //FIXME tests define to delete
 # define I 24
-# define J 24
+# define J 25
 # define SCREEN_WIDTH 1200
 # define SCREEN_HEIGHT 1000
 # define TEXTURE_WIDTH 64
@@ -106,12 +106,12 @@ typedef struct  s_param
     void        *mlx;
     void        *win;
     t_player    *player;
-    int         map[I][J];
+    char         **map;
     t_img       *prev_img;
 }   t_param;
 
 //FIXME test functions to delete
-void    draw_view(t_player *player, int map[I][J]);
+void    draw_view(t_player *player, char **map);
 void    clean_exit(t_param *param);
 int     key_press_hook(int keycode, t_param *param);
 
@@ -119,9 +119,9 @@ int     key_press_hook(int keycode, t_param *param);
 ** Functions for raycasting algorithm
 */
 //fixme map[I][J] to replace once parsing added
-void    raycasting_algorithm(t_img *img, t_player *player, int map[I][J]);
-int     dda(t_player *player, t_ray *ray, int map[I][J]);
-int     dda_algorithm(t_ray *ray, int map[I][J]);
+void    raycasting_algorithm(t_img *img, t_player *player, char **map);
+int     dda(t_player *player, t_ray *ray, char **map);
+int     dda_algorithm(t_ray *ray, char **map);
 void    get_textured_wall(t_img *img, t_player *player, t_ray *ray, int wall_height);
 int     calculate_wall_height(t_ray *ray);
 int     get_texture_x_coordinate(t_player *player, t_ray *ray);
@@ -137,8 +137,8 @@ void    fill_buffer(t_img *img, t_ivec *pos, unsigned int pixel_color);
 ** Movements
 */
 void    move(int keycode, t_param *param);
-void    move_foward(t_player *player, int map[I][J]);
-void    move_backward(t_player *player, int map[I][J]);
+void    move_foward(t_player *player, char **map);
+void    move_backward(t_player *player, char **map);
 void    rotate(int keycode, t_param *param);
 void    rotate_right(t_player *player);
 void    rotate_left(t_player *player);

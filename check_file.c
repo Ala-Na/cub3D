@@ -6,11 +6,24 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:03:42 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/10 18:07:34 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:25:26 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+
+
+t_bool	all_filled_up(t_data *data)
+{
+	if (data->texture.no_file
+			&& data->texture.so_file
+			&& data->texture.we_file
+			&& data->texture.ea_file
+			&& data->texture.c_file
+			&& data->texture.f_file)
+				return (1);
+	return (0);
+}
 
 static void	check_extension(char *file, t_data *data)
 {
@@ -49,11 +62,16 @@ void	check_file(char *file, t_data *data)
 			ft_error_during_gnl(ERROR_GNL, fd, line, data);
 		get_element(fd, line, data);
 		if (all_filled_up(data))
-			printf(" I have everything but the map");
+		{
+			printf("LINE %s\n", line);
+			//printf(" I have everything but the map\n");
+		}
 			//if (line)
 			//get_map()
-		free(line);
-		line = NULL;
+		// if (line && ret == 1)
+		// {
+			free(line);
+			line = NULL;
 	}
 }
 

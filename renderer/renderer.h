@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 16:26:00 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:48:14 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@
 # define SCREEN_HEIGHT 1000
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
+
+//FIXME modify by wasd value
+# define MOVE_FOWARD 65362
+# define MOVE_BACKWARD 65364
+# define ROTATE_RIGHT 65363
+# define ROTATE_LEFT 65361
+# define ESC 65307
 
 //Struct for 2D vector of doubles values
 typedef struct  t_dvec
@@ -94,8 +101,19 @@ typedef struct  s_img
     int     endian;
 }   t_img;
 
+typedef struct  s_param
+{
+    void        *mlx;
+    void        *win;
+    t_player    *player;
+    int         map[I][J];
+    t_img       *prev_img;
+}   t_param;
+
 //FIXME test functions to delete
 void    draw_view(t_player *player, int map[I][J]);
+void    clean_exit(t_param *param);
+int     key_press_hook(int keycode, t_param *param);
 
 /*
 ** Functions for raycasting algorithm
@@ -114,5 +132,15 @@ void    show_textured_wall(t_img *img, t_ray *ray, t_stripe *stripe, int wall_he
 */
 t_img   generate_new_image(void *mlx, int width, int height);
 void    fill_buffer(t_img *img, t_ivec *pos, unsigned int pixel_color);
-;
+
+/*
+** Movements
+*/
+void    move(int keycode, t_param *param);
+void    move_foward(t_player *player, int map[I][J]);
+void    move_backward(t_player *player, int map[I][J]);
+void    rotate(int keycode, t_param *param);
+void    rotate_right(t_player *player);
+void    rotate_left(t_player *player);
+
 #endif

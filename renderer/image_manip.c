@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:02:38 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 15:42:18 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:01:07 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_img    generate_new_image(void *mlx, int width, int height)
     image.height = height;
     image.img = mlx_new_image(image.mlx, image.width, image.height);
     if (image.img == NULL)
-        return NULL; //TODO ADD ERROR
-    image.buffer = mlx_get_data_addr(image.img, &img.bits_per_pixel, &img.size_line, &img.endian);
+        return image; //TODO ADD ERROR
+    image.buffer = mlx_get_data_addr(image.img, &image.bits_per_pixel, &image.size_line, &image.endian);
     return image;
 }
 
@@ -41,12 +41,14 @@ t_img    generate_new_image(void *mlx, int width, int height)
 ** significant (blue, endian == 1) byte is the first one expected by the image.
 ** It fill buffer as a char* with correct value thanks to bitshifting and masking.
 */
-void    fill_buffer(t_img *img, t_ivec pos, unsigned int pixel_color)
+void    fill_buffer(t_img *img, t_ivec *pos, unsigned int pixel_color)
 {
     int             pixel_pos;
 
     if (img->bits_per_pixel != 32)
             pixel_color =  mlx_get_color_value(img->mlx, pixel_color);
+    if (pos->x >= SCREEN_WIDTH || pos->y >= SCREEN_HEIGHT)
+        return; //TODO ERROR OUTSIDE SCREEN
     pixel_pos = (pos->y * img->size_line) + (pos->x * 4);
     if (img->endian == 1)
     {

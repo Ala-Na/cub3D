@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 15:42:13 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:26:00 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@
 # include <X11/X.h>
 
 # define PI 3.1415926535
+# define PITCH 100 //May be modified for jump/crunch ?
+# define MOVE 1.0/3.0
+# define ROTATE PI/8.0 //1/6 de quart de cercle en radian
+
+//FIXME tests define to delete
+# define I 24
+# define J 24
 # define SCREEN_WIDTH 1200
 # define SCREEN_HEIGHT 1000
 # define TEXTURE_WIDTH 64
 # define TEXTURE_HEIGHT 64
-# define PITCH 100 //May be modified for jump/crunch ?
-# define MOVE 1.0/3.0
-# define ROTATE PI/8.0 //1/6 de quart de cercle en radian
 
 //Struct for 2D vector of doubles values
 typedef struct  t_dvec
@@ -66,6 +70,7 @@ typedef struct  s_ray
     t_dvec  delta_dist; //constant value which correspond to distance traveled by ray between to boxes on x/y axis
     double  wall_dist; //perpendicular ray's distance, to avoid fish eye effect
     t_ivec  step; //direction of ray vector on x/y, either +1 or -1
+    int     side; //equal to 0 if wall hit on x-axis, 1 if y-axis
 }   t_ray;
 
 typedef struct  s_stripe
@@ -89,4 +94,25 @@ typedef struct  s_img
     int     endian;
 }   t_img;
 
+//FIXME test functions to delete
+void    draw_view(t_player *player, int map[I][J]);
+
+/*
+** Functions for raycasting algorithm
+*/
+//fixme map[I][J] to replace once parsing added
+void    raycasting_algorithm(t_img *img, t_player *player, int map[I][J]);
+int     dda(t_player *player, t_ray *ray, int map[I][J]);
+int     dda_algorithm(t_ray *ray, int map[I][J]);
+void    get_textured_wall(t_img *img, t_player *player, t_ray *ray, int wall_height);
+int     calculate_wall_height(t_ray *ray);
+int     get_texture_x_coordinate(t_player *player, t_ray *ray);
+void    show_textured_wall(t_img *img, t_ray *ray, t_stripe *stripe, int wall_height);
+
+/*
+** Functions for image management
+*/
+t_img   generate_new_image(void *mlx, int width, int height);
+void    fill_buffer(t_img *img, t_ivec *pos, unsigned int pixel_color);
+;
 #endif

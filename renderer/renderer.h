@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/10 17:06:22 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/11 15:42:13 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,17 @@ typedef struct  s_stripe
     t_ivec  hit_coord; //vector with x and y coordinate hit by ray
     double  pos;
 }   t_stripe;
+
+typedef struct  s_img
+{
+    void    *mlx;
+    void    *img;
+    int     width;
+    int     height;
+    char    *buffer;
+    int     bits_per_pixel;
+    int     size_line;
+    int     endian;
+}   t_img;
 
 #endif

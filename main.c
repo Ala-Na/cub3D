@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/10 17:58:02 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:18:15 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_data(t_data *data)
 	data->texture.so_file = 0;
 	data->texture.we_file = 0;
 	data->texture.ea_file = 0;
+	data->texture.f_file = 0;
+	data->texture.c_file = 0;
 	data->texture.temp = 0;
 }
 
@@ -33,6 +35,7 @@ int	main(int argc, char **argv)
 	{
 		init_data(&data);
 		check_file(argv[1], &data);
+		free_everything(&data);
 	}
 	else
 		ft_putstr(ERROR_NB_ARGUMENT);

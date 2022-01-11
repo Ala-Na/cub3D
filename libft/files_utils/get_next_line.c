@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:43:23 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/10 16:37:17 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:23:10 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int	result(int ret, char **line, char **save)
 	if (ret == 0 && *save == NULL)
 	{
 		free(*line);
+		*line = NULL;
 		return (0);
 	}
 	return (1);

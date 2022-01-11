@@ -6,15 +6,15 @@
 #    By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/10 18:49:14 by fmonbeig         ###   ########.fr        #
+#    Updated: 2022/01/11 12:14:28 by fmonbeig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = cube3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -MMD -I$(HEADER_DIR)
-LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm -L libft #TODO check if minilibx flags are working, and modify it if needed
+LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm libft/libft.a #TODO check if minilibx flags are working, and modify it if needed
 LIB_PATH = libft/.
 
 SRCS_DIR = .
@@ -22,6 +22,7 @@ SRCS_DIR = .
 SRCS = 	main.c\
 		error_and_free.c\
 		check_file.c\
+		get_element.c\
 
 #TODO Ajouter sub_folders ex : $(SUB_SRCS_ARCHITECTURE) puis ajouter
 #TODO (suite ex) SUB_SRCS_ARCHITECTURE = 				\
@@ -32,7 +33,7 @@ OBJS_DIR = .objs
 
 HEADER_DIR = .
 
-PREREQ = $(OBJS:%.o=%.d)
+PREREQ = 	$(OBJS:%.o=%.d)
 
 MAKE = make
 MAKE_DIR = mkdir -p

@@ -6,11 +6,10 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 17:28:31 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:28:54 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# define CUBE3D_H
 
 // +------------------------------------------+ //
 //   System header files                        //
@@ -63,13 +62,12 @@ typedef struct s_texture
 	char	*so_file;
 	char	*we_file;
 	char	*ea_file;
-	int		f_file[3];
-	int		c_file[3];
+	int		**f_file;
+	int		**c_file;
 	t_img	*no;
 	t_img	*so;
 	t_img	*we;
 	t_img	*ea;
-
 }				t_texture;
 
 
@@ -79,7 +77,6 @@ typedef struct s_data
 	char		**map;
 	t_map		map_info;
 	t_texture	texture;
-
 }				t_data;
 
 // +------------------------------------------+ //
@@ -118,7 +115,7 @@ t_bool	all_filled_up(t_data *data);
 void	ft_error(char *str, t_data *data);
 void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data);
 void	free_everything(t_data *data);
-void	free_texture(t_texture *texture);
+void	free_texture(t_data *data);
 
 #endif
 

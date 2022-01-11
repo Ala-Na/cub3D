@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:43:15 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/10 17:55:24 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:26:39 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,38 @@ void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data)
 	free_everything(data);
 }
 
-void	free_texture(t_texture *texture)
+static void	free_int_double_pointer(int numb, int **temp)
 {
-	if (texture->temp)
-		ft_free_split(texture->temp);
-	if (texture->no_file)
-		free(texture->no_file);
-	if (texture->so_file)
-		free(texture->so_file);
-	if (texture->we_file)
-		free(texture->we_file);
-	if (texture->ea_file)
-		free(texture->ea_file);
+	int	i;
+
+	i = -1;
+	while (++i < numb)
+		free(temp[i]);
+	free(temp);
+}
+
+void	free_texture(t_data *data)
+{
+	if (data->texture.temp)
+		ft_free_split(data->texture.temp);
+	if (data->texture.no_file)
+		free(data->texture.no_file);
+	if (data->texture.so_file)
+		free(data->texture.so_file);
+	if (data->texture.we_file)
+		free(data->texture.we_file);
+	if (data->texture.ea_file)
+		free(data->texture.ea_file);
+	if (data->texture.f_file)
+		free_int_double_pointer(3, data->texture.f_file);
+	if (data->texture.c_file)
+		free_int_double_pointer(3, data->texture.c_file);
 }
 
 void	free_everything(t_data *data)
 {
 	if (data->map)
 		ft_free_split(data->map);
-	free_texture(&data->texture);
+	free_texture(data);
+	exit(1);
 }

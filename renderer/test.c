@@ -100,7 +100,7 @@ int main()
 100000000000000000000001\n\
 111111111111111111111111";
     char **map = ft_split(str, '\n');
-    char *tex_path = "./renderer/cheese.xpm";
+    char *tex_path = "./renderer/blue_cheese.xpm";
     t_player    player;
 
     //In this example, player is directed towards West

@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:19 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 17:07:23 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:49:34 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	print_parsing(t_data *data)
 	printf("EA = %s\n", data->texture.ea_file);
 	printf("WE = %s\n", data->texture.we_file);
 	printf("NO = %s\n\n", data->texture.no_file);
+	printf("F = %p\n", data->texture.f_file);
 	printf("F = %d,%d,%d\n", *data->texture.f_file[0], *data->texture.f_file[1], *data->texture.f_file[2]);
 	printf("C = %d,%d,%d\n\n", *data->texture.c_file[0],*data->texture.c_file[1], *data->texture.c_file[2]);
 	while (data->map[++i])
@@ -94,6 +95,7 @@ void	check_map(t_data *data)
 		check_one(data->map[i], data);
 		get_player_position(i, data);
 	}
+	check_first_line(data->map[i - 1], data);
 	if (data->map_info.player_orientation == 0)
 		ft_error(ERROR_NO_PLAYER, data);
 	i = -1;

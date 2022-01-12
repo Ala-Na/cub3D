@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:43:15 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 16:49:06 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:09:34 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data)
 	free_everything(data);
 }
 
+void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data)
+{
+	get_next_line(fd, &line, 1);
+	free(line);
+	close(fd);
+	if (!error_message)
+		perror("ERROR\n");
+	else
+		write(2, error_message, ft_strlen(error_message));
+	free_everything(data);
+}
+
 static void	free_int_double_pointer(int numb, int **temp)
 {
 	int	i;
@@ -46,10 +58,13 @@ static void	free_int_double_pointer(int numb, int **temp)
 	while (++i < numb)
 		free(temp[i]);
 	free(temp);
+	printf("COUCOU\n");
 }
 
 void	free_texture(t_data *data)
 {
+	printf("F = %p\n", data->texture.f_file);
+	printf("C = %p\n", data->texture.c_file);
 	if (data->texture.temp)
 		ft_free_split(data->texture.temp);
 	if (data->texture.no_file)

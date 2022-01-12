@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map 2.c                                      :+:      :+:    :+:   */
+/*   check_map2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:19 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 16:56:27 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:27:30 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,21 @@ void	check_one(char *line, t_data *data)
 		ft_error(ERROR_MAP_NOT_CLOSE, data);
 }
 
-// void	check_close(int height, t_data *data)
-// {
-// 	int	width;
+void	check_close(int height, t_data *data)
+{
+	int	width;
 
-// 	width = -1;
-// 	while(data->map[height][++width])
-// 	{
-// 		if (data->map[height][width] != 1)
-// 		{
-
-// 		}
-// 		ft_error(ERROR_MAP_NOT_CLOSE, data);
-// 	}
-// }
+	width = -1;
+	while(data->map[height][++width])
+	{
+		if (data->map[height][width] != '1')
+		{
+			if (data->map[height + 1][width] == '\0' ||
+					data->map[height -1][width] == '\0')
+				ft_error(ERROR_MAP_NOT_CLOSE, data);
+		}
+	}
+}
 
 void	get_player_position(int height, t_data *data)
 {

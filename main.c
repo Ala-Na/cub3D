@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 15:42:52 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:12:22 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
+//TODO check => optimiser la partie get colour
 //	perror("ERROR"); Permet de prnt avec ERROR au debut
 //	Est ce qu on utilise calloc au lieu de malloc ?

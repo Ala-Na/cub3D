@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 17:02:43 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 17:08:52 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define J 25
 # define SCREEN_WIDTH 1200
 # define SCREEN_HEIGHT 1000
-# define TEXTURE_WIDTH 64
-# define TEXTURE_HEIGHT 64
+# define TEXTURE_WIDTH 400
+# define TEXTURE_HEIGHT 399
 
 //FIXME modify by wasd value
 # define MOVE_FOWARD 65362

@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:23:08 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 17:07:14 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 17:24:11 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ void    show_textured_wall(t_param *param, t_img *img, t_ray *ray, t_stripe *str
     }
     while (pixel_pos.y < stripe->low_pixel)
     {
-        stripe->hit_coord.y = (int)(stripe->pos) & (TEXTURE_HEIGHT - 1); // masking in case of overflow
+        stripe->hit_coord.y = (int)(stripe->pos);// & (TEXTURE_HEIGHT - 1); // masking in case of overflow
+        if (stripe->hit_coord.y < 0)
+            stripe->hit_coord.y = 0;
+        else if (stripe->hit_coord.y >= TEXTURE_HEIGHT)
+            stripe->hit_coord.y = TEXTURE_HEIGHT -1;
         stripe->pos += scale;
         pixel_color = (unsigned int)(param->texture_buffer)[(param->text_size_line / 4) * stripe->hit_coord.y + stripe->hit_coord.x];
         //Make color darker for y-sides
@@ -62,7 +66,6 @@ int    get_texture_x_coordinate(t_player *player, t_ray *ray)
         texture_hit_x = TEXTURE_WIDTH - texture_hit_x - 1;
     if (ray->side == 1 && ray->dir.y > 0)
         texture_hit_x = TEXTURE_WIDTH - texture_hit_x - 1;
-    printf("%d\n", texture_hit_x);
     return texture_hit_x;
 }
 

@@ -18,8 +18,9 @@ int     key_press_hook(int keycode, t_param *param)
 
 void    clean_exit(t_param *param)
 {
-    if (param->prev_img && param->prev_img->img != NULL)
-        mlx_destroy_image(param->mlx, param->prev_img->img);
+    //FIXME Segfault with following
+    //if (param->prev_img && param->prev_img->img != NULL)
+    //    mlx_destroy_image(param->mlx, param->prev_img->img);
     mlx_destroy_window(param->mlx, param->win);
     mlx_destroy_display(param->mlx);
     free(param->mlx);
@@ -33,7 +34,7 @@ void    clean_exit(t_param *param)
     exit(0);  
 }
 
-void    draw_view(t_player *player, char **map) //FIXME test function only
+void    draw_view(t_player *player, char **map, char *text_path) //FIXME test function only
 {
     t_param param;
     t_img   img;
@@ -41,12 +42,22 @@ void    draw_view(t_player *player, char **map) //FIXME test function only
     param.mlx = mlx_init();
     param.win = mlx_new_window(param.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "test");
     img = generate_new_image(param.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-    if (img.img == NULL)
+    param.texture = mlx_xpm_file_to_image(param.mlx, text_path, &(param.texture_width), &(param.texture_height));
+    param.texture_buffer = (int*)mlx_get_data_addr(param.texture, &(param.text_bits_per_pixel), &(param.text_size_line), &(param.text_endian));
+    if (param.texture_width != TEXTURE_WIDTH || param.texture_height != TEXTURE_HEIGHT) //FIXME Shouldn't be macro
+    {
+        printf("ERROR IN TEXTURE FOR TEST (MACRO AND DIMENSIONS ARE DIFFERENTS) !\n");
+        return;
+    }
+    if (param.texture == NULL || img.img == NULL)
+    {
+        printf("ERROR EXIT\n");
         return; //TODO ADD ERROR, FREE MLX AND WIN
-    raycasting_algorithm(&img, player, map);
+    }
     param.prev_img = &img;
     param.player = player;
     param.map = map;
+    raycasting_algorithm(&param, &img, player, map);
     mlx_put_image_to_window(param.mlx, param.win, img.img, 0, 0);
     mlx_hook(param.win, KeyPress, KeyPressMask, key_press_hook, &param);
     mlx_loop(param.mlx); 
@@ -81,6 +92,7 @@ int main()
 100000000000000000000001\n\
 111111111111111111111111";
     char **map = ft_split(str, '\n');
+    char *tex_path = "./renderer/greystone.xpm";
     t_player    player;
 
     //In this example, player is directed towards West
@@ -90,6 +102,6 @@ int main()
     player.dir.x = 0.0;
     player.cam_plane.y = 0.0;
     player.cam_plane.x = 0.66; //To conserve FOV = 66°
-    draw_view(&player, map);
+    draw_view(&player, map, tex_path);
     return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:23:08 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 16:26:59 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 14:55:25 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer.h"
 
-void    show_textured_wall(t_img *img, t_ray *ray, t_stripe *stripe, int wall_height)
+void    show_textured_wall(t_param *param, t_img *img, t_ray *ray, t_stripe *stripe, int wall_height)
 {
     double          scale; //scaling/increase texture to screen scale
     t_ivec          pixel_pos;
@@ -21,15 +21,27 @@ void    show_textured_wall(t_img *img, t_ray *ray, t_stripe *stripe, int wall_he
     scale = 1.0 * TEXTURE_HEIGHT / wall_height;
     stripe->pos = (stripe->high_pixel - PITCH - SCREEN_HEIGHT / 2 + wall_height / 2) * scale;
     pixel_pos.x = ray->screen_x;
-    pixel_pos.y = stripe->high_pixel;
+    pixel_pos.y = 0;
+    while (pixel_pos.y < stripe->high_pixel)
+    {
+        pixel_color = 0xABCDEF; //TODO modify by ceiling color
+        fill_buffer(img, &pixel_pos, pixel_color);
+        pixel_pos.y++;
+    }
     while (pixel_pos.y < stripe->low_pixel)
     {
         stripe->hit_coord.y = (int)(stripe->pos) & (TEXTURE_HEIGHT - 1); // masking in case of overflow
         stripe->pos += scale;
-        pixel_color = 0xABCDEF; //TODO Test version. True version : pixel_color = texture[stripe->texture_number][TEXTURE_HEIGHT * strip->hit_coord->y + strip->hit_coord->x];
+        pixel_color = (unsigned int)(param->texture_buffer)[TEXTURE_HEIGHT * stripe->hit_coord.y + stripe->hit_coord.x];
         //Make color darker for y-sides
         if (ray->side == 1)
             pixel_color = (pixel_color >> 1) & 8355711;
+        fill_buffer(img, &pixel_pos, pixel_color);
+        pixel_pos.y++;
+    }
+    while (pixel_pos.y < SCREEN_HEIGHT)
+    {
+        pixel_color = 0x81ceb4; //TODO modify by floor color
         fill_buffer(img, &pixel_pos, pixel_color);
         pixel_pos.y++;
     }
@@ -68,7 +80,7 @@ int get_texture_number(t_player *player, t_ray *ray)
 }
 */
 
-void    get_textured_wall(t_img *img, t_player *player, t_ray *ray, int wall_height)
+void    get_textured_wall(t_param *param, t_img *img, t_player *player, t_ray *ray, int wall_height)
 {
     t_stripe    stripe;
 
@@ -80,5 +92,5 @@ void    get_textured_wall(t_img *img, t_player *player, t_ray *ray, int wall_hei
         stripe.high_pixel = 0;
     //stripe.texture_number = get_texture_number(player, ray); //TODO decomment line
     stripe.hit_coord.x = get_texture_x_coordinate(player, ray);
-    show_textured_wall(img, ray, &stripe, wall_height);
+    show_textured_wall(param, img, ray, &stripe, wall_height);
 }

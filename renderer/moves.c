@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:33:27 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 21:59:57 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 14:43:45 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    move(int keycode, t_param *param)
     new_img = generate_new_image(param->mlx, SCREEN_WIDTH, SCREEN_WIDTH);
     if (new_img.img == NULL)
         return; //TODO ADD ERROR, FREE MLX AND WIN
-    raycasting_algorithm(&new_img, param->player, param->map);
+    raycasting_algorithm(param, &new_img, param->player, param->map);
     mlx_put_image_to_window(param->mlx, param->win, new_img.img, 0, 0);
     if (param->prev_img->img != NULL)
         mlx_destroy_image(param->mlx, param->prev_img->img);
@@ -81,7 +81,8 @@ void    rotate(int keycode, t_param *param)
     new_img = generate_new_image(param->mlx, SCREEN_WIDTH, SCREEN_WIDTH);
     if (new_img.img == NULL)
         return; //TODO ADD ERROR, FREE MLX AND WIN
-    raycasting_algorithm(&new_img, param->player, param->map);
+    raycasting_algorithm(param, &new_img, param->player, param->map);
+    //printf("player dir %f %f with cam plane %f %f\n", param->player->dir.x, param->player->dir.y, param->player->cam_plane.x, param->player->cam_plane.y);
     mlx_put_image_to_window(param->mlx, param->win, new_img.img, 0, 0);
     if (param->prev_img->img != NULL)
         mlx_destroy_image(param->mlx, param->prev_img->img);

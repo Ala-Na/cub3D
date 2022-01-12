@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 21:47:16 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 14:54:12 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,17 @@ typedef struct  s_param
     t_player    *player;
     char         **map;
     t_img       *prev_img;
+    void        *texture;
+    int         *texture_buffer;
+    int         text_bits_per_pixel;
+    int         text_size_line;
+    int         text_endian;
+    int         texture_width;
+    int         texture_height;
 }   t_param;
 
 //FIXME test functions to delete
-void    draw_view(t_player *player, char **map);
+void    draw_view(t_player *player, char **map, char *text_path);
 void    clean_exit(t_param *param);
 int     key_press_hook(int keycode, t_param *param);
 
@@ -119,13 +126,13 @@ int     key_press_hook(int keycode, t_param *param);
 ** Functions for raycasting algorithm
 */
 //fixme map[I][J] to replace once parsing added
-void    raycasting_algorithm(t_img *img, t_player *player, char **map);
+void    raycasting_algorithm(t_param *param, t_img *img, t_player *player, char **map);
 int     dda(t_player *player, t_ray *ray, char **map);
 int     dda_algorithm(t_ray *ray, char **map);
-void    get_textured_wall(t_img *img, t_player *player, t_ray *ray, int wall_height);
+void    get_textured_wall(t_param *param, t_img *img, t_player *player, t_ray *ray, int wall_height);
 int     calculate_wall_height(t_ray *ray);
 int     get_texture_x_coordinate(t_player *player, t_ray *ray);
-void    show_textured_wall(t_img *img, t_ray *ray, t_stripe *stripe, int wall_height);
+void    show_textured_wall(t_param *param, t_img *img, t_ray *ray, t_stripe *stripe, int wall_height);
 
 /*
 ** Functions for image management

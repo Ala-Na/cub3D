@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 21:05:53 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 14:42:40 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int    dda(t_player *player, t_ray *ray, char **map)
     return dda_algorithm(ray, map);
 }
 
-void    raycasting_algorithm(t_img *img, t_player *player, char **map)
+void    raycasting_algorithm(t_param *param, t_img *img, t_player *player, char **map)
 {
     t_ray   ray;
     int     side;
@@ -98,9 +98,10 @@ void    raycasting_algorithm(t_img *img, t_player *player, char **map)
             ray.delta_dist.y = 1e30;
         else
             ray.delta_dist.y = fabs(1 / ray.dir.y);
+        //TODO check if error with fabs
         ray.side = dda(player, &ray, map);
         wall_height = calculate_wall_height(&ray);
-        get_textured_wall(img, player, &ray, wall_height);
+        get_textured_wall(param, img, player, &ray, wall_height);
         ray.screen_x++;
     }
 }

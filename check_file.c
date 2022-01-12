@@ -6,11 +6,11 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:03:42 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/11 16:25:26 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:56:35 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 
 t_bool	all_filled_up(t_data *data)
@@ -60,19 +60,15 @@ void	check_file(char *file, t_data *data)
 		ret = get_next_line(fd, &line, 0);
 		if (ret == -1)
 			ft_error_during_gnl(ERROR_GNL, fd, line, data);
+		if (line && line[0] == '\0' && data->texture.flag_map == 1)
+			ft_error_during_gnl(ERROR_MAP_EMPTY_LINE, fd, line, data);
+		if (all_filled_up(data) && line && line[0])
+			get_map(fd, line, data);
 		get_element(fd, line, data);
-		if (all_filled_up(data))
-		{
-			printf("LINE %s\n", line);
-			//printf(" I have everything but the map\n");
-		}
-			//if (line)
-			//get_map()
-		// if (line && ret == 1)
-		// {
-			free(line);
-			line = NULL;
+		free(line);
+		line = NULL;
 	}
+	close(fd);
 }
 
 //TODO fonction get_map, pour la put dans un char ** (a faire apres avec un second gnl)

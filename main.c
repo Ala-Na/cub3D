@@ -6,15 +6,17 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/11 16:18:15 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:42:52 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void	init_data(t_data *data)
 {
 	data->map = 0;
+	data->map_info.temp_h = 0;
+	data->map_info.temp_w = 0;
 	data->map_info.player_orientation = 0;
 	data->map_info.player_height = 0;
 	data->map_info.player_width = 0;
@@ -25,6 +27,7 @@ void	init_data(t_data *data)
 	data->texture.f_file = 0;
 	data->texture.c_file = 0;
 	data->texture.temp = 0;
+	data->texture.flag_map = 0;
 }
 
 int	main(int argc, char **argv)
@@ -34,7 +37,9 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		init_data(&data);
+		get_info_map(argv[1], &data);
 		check_file(argv[1], &data);
+		check_map(&data);
 		free_everything(&data);
 	}
 	else

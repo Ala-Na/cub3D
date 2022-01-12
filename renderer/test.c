@@ -2,6 +2,12 @@
 
 // gcc ./renderer/*.c -Lminilibx-linux/ -lmlx -lXext -lX11 -lm -Llibft -lft -g
 
+int     close_win_hook(t_param *param)
+{
+    printf("EXIT\n");
+    clean_exit(param);
+}
+
 int     key_press_hook(int keycode, t_param *param)
 {
     if (keycode == ESC)
@@ -43,6 +49,7 @@ void    draw_view(t_player *player, char **map, char *text_path) //FIXME test fu
     param.win = mlx_new_window(param.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "test");
     img = generate_new_image(param.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
     param.texture = mlx_xpm_file_to_image(param.mlx, text_path, &(param.texture_width), &(param.texture_height));
+    printf("tex width %i height %i\n", param.texture_width, param.texture_height);
     param.texture_buffer = (int*)mlx_get_data_addr(param.texture, &(param.text_bits_per_pixel), &(param.text_size_line), &(param.text_endian));
     if (param.texture_width != TEXTURE_WIDTH || param.texture_height != TEXTURE_HEIGHT) //FIXME Shouldn't be macro
     {
@@ -60,6 +67,7 @@ void    draw_view(t_player *player, char **map, char *text_path) //FIXME test fu
     raycasting_algorithm(&param, &img, player, map);
     mlx_put_image_to_window(param.mlx, param.win, img.img, 0, 0);
     mlx_hook(param.win, KeyPress, KeyPressMask, key_press_hook, &param);
+    mlx_hook(param.win, DestroyNotify, StructureNotifyMask, close_win_hook, &param);
     mlx_loop(param.mlx); 
 }
 
@@ -96,8 +104,8 @@ int main()
     t_player    player;
 
     //In this example, player is directed towards West
-    player.pos.y = 22.0;
-    player.pos.x = 11.5;
+    player.pos.y = 1.5;
+    player.pos.x = 1.5;
     player.dir.y = -1.0;
     player.dir.x = 0.0;
     player.cam_plane.y = 0.0;

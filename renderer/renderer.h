@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 14:54:12 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 17:02:43 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int     key_press_hook(int keycode, t_param *param);
 /*
 ** Functions for raycasting algorithm
 */
-//fixme map[I][J] to replace once parsing added
 void    raycasting_algorithm(t_param *param, t_img *img, t_player *player, char **map);
 int     dda(t_player *player, t_ray *ray, char **map);
 int     dda_algorithm(t_ray *ray, char **map);

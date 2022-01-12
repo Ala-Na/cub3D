@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:23:08 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 14:55:25 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/12 17:07:14 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    show_textured_wall(t_param *param, t_img *img, t_ray *ray, t_stripe *str
     {
         stripe->hit_coord.y = (int)(stripe->pos) & (TEXTURE_HEIGHT - 1); // masking in case of overflow
         stripe->pos += scale;
-        pixel_color = (unsigned int)(param->texture_buffer)[TEXTURE_HEIGHT * stripe->hit_coord.y + stripe->hit_coord.x];
+        pixel_color = (unsigned int)(param->texture_buffer)[(param->text_size_line / 4) * stripe->hit_coord.y + stripe->hit_coord.x];
         //Make color darker for y-sides
         if (ray->side == 1)
             pixel_color = (pixel_color >> 1) & 8355711;
@@ -58,10 +58,11 @@ int    get_texture_x_coordinate(t_player *player, t_ray *ray)
         wall_hit_x = player->pos.x + ray->wall_dist * ray->dir.x;
     wall_hit_x -= floor((wall_hit_x));
     texture_hit_x = (int)(wall_hit_x * (double)(TEXTURE_WIDTH));
-    if (ray->side == 0 && ray->dir.x > 0)
+    if (ray->side == 0 && ray->dir.x < 0)
         texture_hit_x = TEXTURE_WIDTH - texture_hit_x - 1;
-    if (ray->side == 1 && ray->dir.y < 0)
+    if (ray->side == 1 && ray->dir.y > 0)
         texture_hit_x = TEXTURE_WIDTH - texture_hit_x - 1;
+    printf("%d\n", texture_hit_x);
     return texture_hit_x;
 }
 

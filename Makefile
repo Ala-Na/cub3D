@@ -6,11 +6,11 @@
 #    By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/11 12:14:28 by fmonbeig         ###   ########.fr        #
+#    Updated: 2022/01/12 16:56:42 by fmonbeig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cube3d
+NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -MMD -I$(HEADER_DIR)
@@ -22,7 +22,10 @@ SRCS_DIR = .
 SRCS = 	main.c\
 		error_and_free.c\
 		check_file.c\
+		check_map.c\
 		get_element.c\
+		get_map.c\
+		check_map2.c
 
 #TODO Ajouter sub_folders ex : $(SUB_SRCS_ARCHITECTURE) puis ajouter
 #TODO (suite ex) SUB_SRCS_ARCHITECTURE = 				\

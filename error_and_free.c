@@ -6,11 +6,11 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:43:15 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/11 16:26:39 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:49:06 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 /***
  * ft_error : send a error message and exit the program properly.
@@ -20,7 +20,7 @@
 void	ft_error(char *error_message, t_data *data)
 {
 	if (!error_message)
-		perror("ERROR");
+		perror("ERROR\n");
 	else
 		write(2, error_message, ft_strlen(error_message));
 	free_everything(data);
@@ -30,8 +30,9 @@ void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data)
 {
 	get_next_line(fd, &line, 1);
 	free(line);
+	close(fd);
 	if (!error_message)
-		perror("ERROR");
+		perror("ERROR\n");
 	else
 		write(2, error_message, ft_strlen(error_message));
 	free_everything(data);

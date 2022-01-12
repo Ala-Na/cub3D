@@ -6,11 +6,11 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:06:07 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/11 17:10:30 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 14:31:39 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 static char	*suppress_white_space(char *str)
 {
@@ -33,7 +33,6 @@ static void	filled_one_element(char **str, int fd, char *line, t_data *data)
 	*str = ft_strdup(suppress_white_space(&line[2]));
 	if (!str)
 		ft_error_during_gnl(ERROR_MALLOC, fd, line, data);
-	printf("%s\n", *str); //FIXME
 }
 
 static int	**malloc_colour(int fd, char *line, t_data *data)
@@ -76,11 +75,10 @@ static int	**filled_floor_or_ceiling(int fd, char *line, t_data *data)
 			ft_error_during_gnl(ERROR_COLOUR_NOT_RGB, fd, line, data);
 	ft_free_split(data->texture.temp);
 	data->texture.temp = NULL;
-	printf("COLOUR %d,%d,%d\n", *colour[0], *colour[1], *colour[2]);
 	return (colour);
 }
 
-void get_element(int fd, char *line, t_data *data)
+void get_element(int fd, char *line, t_data *data) //FIXME trop long
 {
 	if (line)
 	{
@@ -105,12 +103,11 @@ void get_element(int fd, char *line, t_data *data)
 			data->texture.c_file = filled_floor_or_ceiling(fd, line, data);
 		}
 		else if (!ft_strncmp(line, "\0", 1))
-			printf("\\n\n"); // mettre un return
+			return ;
 		else
 		{
 			if (!all_filled_up(data))
 				ft_error_during_gnl(ERROR_ELEMENT, fd, line, data);
 		}
 	}
-
 }

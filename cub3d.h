@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 17:05:24 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:06:06 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef int	t_bool;
 # define ERROR_ELEMENT_DOUBLON	"ERROR\nTwo element has the same name\n"
 # define ERROR_COLOUR_WRONG_ELE	"ERROR\nWrong argument for colour definition\n"
 # define ERROR_COLOUR_TOO_MANY	"ERROR\nToo many argument for colour definition\n"
+# define ERROR_NO_COLOUR		"ERROR\nNot enough argument for colour definition\n"
 # define ERROR_COLOUR_NOT_RGB	"ERROR\nNumber must be between 0 and 255 for RGB\n"
 # define ERROR_MAP_IS_TO_BIG	"ERROR\nMap is to big\n"
 # define ERROR_MAP_EMPTY_LINE	"ERROR\nMap have an empty line\n"

@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:06:07 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 14:31:39 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/12 18:12:03 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	filled_one_element(char **str, int fd, char *line, t_data *data)
 		ft_error_during_gnl(ERROR_MALLOC, fd, line, data);
 }
 
-static int	**malloc_colour(int fd, char *line, t_data *data)
+static int	**malloc_colour(int fd, char *line, t_data *data) // TODO : avec un flag on peut savoir qui on malloc
 {
 	int	i;
 	int	**colour;
@@ -44,15 +44,16 @@ static int	**malloc_colour(int fd, char *line, t_data *data)
 	colour = ft_calloc(3, sizeof(int *));
 	if (!colour)
 		ft_error_during_gnl(ERROR_MALLOC, fd, line, data);
+	printf("adrese de colour %p\n", colour);
 	while (++i < 3)
 		colour[i] = ft_calloc(1, sizeof(int));
 	return (colour);
 }
 
-static int	**filled_floor_or_ceiling(int fd, char *line, t_data *data)
+static int	**filled_floor_or_ceiling(int fd, char *line, t_data *data) //FIXME trop long
 {
 	int	i;
-	int	**colour;
+	int	**colour; // TODO il faut envoyer ce int **colour pour qu'il se fasse kill ou ne plus l'utiliser
 
 	i = -1;
 	colour = malloc_colour(fd, line, data);
@@ -66,6 +67,8 @@ static int	**filled_floor_or_ceiling(int fd, char *line, t_data *data)
 		if (i == 3)
 			ft_error_during_gnl(ERROR_COLOUR_TOO_MANY, fd, line, data);
 	}
+	if (i != 3)
+		ft_error_during_gnl(ERROR_NO_COLOUR, fd, line, data);
 	i = -1;
 	while (++i < 3)
 		*colour[i] = ft_atoi(data->texture.temp[i]);
@@ -100,7 +103,7 @@ void get_element(int fd, char *line, t_data *data) //FIXME trop long
 		{
 			if (data->texture.c_file)
 				ft_error_during_gnl(ERROR_ELEMENT_DOUBLON, fd, line, data);
-			data->texture.c_file = filled_floor_or_ceiling(fd, line, data);
+			data->texture.c_file = filled_floor_or_ceiling(fd, line, data); //TODO passer un flag
 		}
 		else if (!ft_strncmp(line, "\0", 1))
 			return ;

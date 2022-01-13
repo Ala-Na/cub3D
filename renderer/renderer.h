@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:29:25 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 18:04:18 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 11:41:55 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@
 # include <X11/X.h>
 
 # define PI 3.1415926535
-# define PITCH 100 //May be modified for jump/crunch ?
+# define PITCH 100
 # define MOVE 1.0/3.0
-# define ROTATE PI/8.0 //1/6 de quart de cercle en radian
+# define ROTATE PI/8.0
 
 //FIXME tests define to delete
 # define I 24

@@ -6,12 +6,14 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:33:27 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 15:49:47 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 11:46:50 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "renderer.h"
 
+
+//FIXME Add move to left and right (not just the camera)
 void    move(int keycode, t_param *param)
 {
     t_img   new_img;

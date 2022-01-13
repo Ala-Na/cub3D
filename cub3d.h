@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 18:06:06 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/13 11:53:46 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,38 @@
 # include <string.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
+# include <math.h>
+# include <stdbool.h>
 
 // +------------------------------------------+ //
 //   Libft & other custom headers               //
 // +------------------------------------------+ //
 
 # include "libft/libft.h"
-//# include "mlx.h"
+# include "minilibx-linux/mlx.h"
 
 // +------------------------------------------+ //
 //   Structure                                  //
 // +------------------------------------------+ //
 
+typedef struct  t_dvec
+{
+    double  x;
+    double  y;
+}   t_dvec;
+
+typedef struct  t_ivec
+{
+    int x;
+    int y;
+}   t_ivec;
+
+typedef struct  s_player
+{
+    t_dvec  pos;
+    t_dvec  dir;
+    t_dvec  cam_plane;
+}   t_player;
 
 typedef struct s_map
 {
@@ -43,15 +63,16 @@ typedef struct s_map
 	int			temp_w;
 	int			height;
 	int			width;
-	char		player_orientation;
-	int		player_height;
-	int		player_width;
+	char		player_orientation;//FIXME add to t_player of data
+	int			player_height;//FIXME add to t_player of data
+	int			player_width;//FIXME add to t_player of data
 }				t_map;
 
 typedef struct s_img
 {
+	void	*mlx;
 	void	*img;
-	char	*addr;
+	char	*addr; //buffer
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -75,14 +96,39 @@ typedef struct s_texture
 	t_img	*ea;
 }				t_texture;
 
-
 typedef struct s_data
 {
 	void		*mlx;
+	void		*win;
 	char		**map;
-	t_map		map_info;
-	t_texture	texture;
+	t_map		*map_info;
+	t_texture	*textures;
+	t_player	*player;
+	t_img		*img;
 }				t_data;
+
+typedef struct  s_ray
+{
+    int     screen_x;
+    double  cam_pos_x;
+    t_dvec  dir;
+    t_ivec  box;
+    t_dvec  side_dist;
+    t_dvec  delta_dist;
+    double  wall_dist;
+    t_ivec  step;
+    int     side;
+}   t_ray;
+
+typedef struct  s_stripe
+{
+    int     texture_number;
+    int     high_pixel;
+    int     low_pixel;
+    t_ivec  hit_coord;
+    double  pos;
+}   t_stripe;
+
 
 // +------------------------------------------+ //
 //   Typedef                                    //
@@ -91,6 +137,7 @@ typedef int	t_bool;
 // +------------------------------------------+ //
 //   Define                                     //
 // +------------------------------------------+ //
+// Define for parsing
 # define ERROR_NAME_MAP 		"ERROR\nBad map extension\n"
 # define ERROR_NB_ARGUMENT		"ERROR\nWrong number of argument\n"
 # define ERROR_GNL				"ERROR\nBad read of the file\n"
@@ -107,8 +154,21 @@ typedef int	t_bool;
 # define ERROR_TWO_PLAYERS		"ERROR\nMap have more than one player\n"
 # define ERROR_NO_PLAYER		"ERROR\nNo player, No game :(\n"
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
-//TODO => Define les touches de clavier sur linux
 
+// Define for maths calculations
+# define PI 3.1415926535
+# define PITCH 100
+# define MOVE 1.0/3.0
+# define ROTATE PI/8.0
+
+// Define for keyboard qwerty linux
+# define MOVE_FOWARD 119
+# define MOVE_BACKWARD 115
+# define MOVE_LEFT 97
+# define MOVE_RIGHT 100
+# define ROTATE_RIGHT 65363
+# define ROTATE_LEFT 65361
+# define ESC 65307
 // +------------------------------------------+ //
 //   Check file and map                         //
 // +------------------------------------------+ //

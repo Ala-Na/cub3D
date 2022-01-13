@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:29:57 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 19:24:53 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 21:05:32 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,30 @@ void    convert_floor_and_ceiling_colors(t_data *data)
     data->texture->c_value = convert_RGB_to_int(0, *ce[0], *ce[1], *ce[2]);    
 }
 
+void    modify_map(t_data *data)
+{
+    int i;
+    int j;
+
+    i = -1;
+	while (data->map[++i])
+	{
+		j = -1;
+		while(data->map[i][++j])
+            if (ft_strchr("NSWE", data->map[i][j]) != 0)
+                data->map[i][j] = '0';
+	}
+}
+
 void    launch_engine(t_data *data)
 {
     t_img   *new_img;
     
-    printf("LAUNCH %f %f %f %f\n", data->player->pos.x, data->player->pos.y, data->player->dir.x, data->player->dir.y);
     convert_floor_and_ceiling_colors(data);
+    modify_map(data);
     mlx_get_screen_size(data->mlx, &(data->screen_width), &(data->screen_height));
-    data->win = mlx_new_window(data->mlx, data->screen_height, data->screen_height, "Cub3D");
-    new_img = generate_new_empty_image(data, data->screen_height, data->screen_height);
+    data->win = mlx_new_window(data->mlx, data->screen_width, data->screen_height, "Cub3D");
+    new_img = generate_new_empty_image(data, data->screen_width, data->screen_height);
     if (new_img->img == NULL)
     {
         printf("ERROR EXIT\n");

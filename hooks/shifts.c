@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:05:41 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 19:22:20 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 20:56:33 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    move(int keycode, t_data *data)
         move_right(data->player, data->map, data->map_info);
     else
         move_left(data->player, data->map, data->map_info);
-    new_img = generate_new_empty_image(data, data->screen_height, data->screen_height);
+    new_img = generate_new_empty_image(data, data->screen_width, data->screen_height);
     if (new_img->img == NULL)
     {
         return; //TODO Error management
@@ -47,7 +47,6 @@ void    move_foward(t_player *player, char **map, t_map *map_info)
     new_y = (int)(player->pos.y + player->dir.y * (MOVE + 0.01));
     curr_x = (int)(player->pos.x);
     curr_y = (int)(player->pos.y);
-    //FIXME Error in map value
     if (new_x < map_info->width && new_x > 0 && map[curr_y][new_x] == '0')
     {
         player->pos.x += player->dir.x * MOVE;

@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 19:25:27 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 20:43:16 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int argc, char **argv)
 		check_file(argv[1], &data);
 		check_map(&data);
 		init_img(&data);
-		printf("map[6][3] %i\n", data.map[6][3]);
 		launch_engine(&data);
 		free_everything(&data);
 	}

@@ -6,10 +6,11 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 17:32:13 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:42:43 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CUB3D_H
 # define CUB3D_H
 
 // +------------------------------------------+ //
@@ -39,39 +40,34 @@
 
 typedef struct  t_dvec
 {
-    double  x;
-    double  y;
-}   t_dvec;
+	double  x;
+	double  y;
+}	t_dvec;
 
 typedef struct  t_ivec
 {
-    int x;
-    int y;
-}   t_ivec;
+	int x;
+	int y;
+}	t_ivec;
 
 typedef struct  s_player
 {
-    t_dvec  pos;
-    t_dvec  dir;
-    t_dvec  cam_plane;
-}   t_player;
+	t_dvec  pos;
+	t_dvec  dir;
+	t_dvec  cam_plane;
+}	t_player;
 
 typedef struct s_map
 {
-	int			temp_h;
-	int			temp_w;
 	int			height;
 	int			width;
-	char		player_orientation;//FIXME add to t_player of data
-	int			player_height;//FIXME add to t_player of data
-	int			player_width;//FIXME add to t_player of data
 }				t_map;
 
 typedef struct s_img
 {
 	void	*mlx;
 	void	*img;
-	char	*addr; //buffer
+	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -91,10 +87,10 @@ typedef struct s_texture
 	int		**c_file;
 	int		f_value;
 	int		c_value;
-	t_img	*no;
-	t_img	*so;
-	t_img	*we;
-	t_img	*ea;
+	t_img	no;
+	t_img	so;
+	t_img	we;
+	t_img	ea;
 }				t_texture;
 
 typedef struct s_data
@@ -157,6 +153,7 @@ typedef int	t_bool;
 # define ERROR_TWO_PLAYERS		"ERROR\nMap have more than one player\n"
 # define ERROR_NO_PLAYER		"ERROR\nNo player, No game :(\n"
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
+# define ERROR_IMG				"ERROR\nMlx image error\n"
 
 // Define for maths calculations
 # define PI 3.1415926535
@@ -172,6 +169,7 @@ typedef int	t_bool;
 # define ROTATE_RIGHT 65363
 # define ROTATE_LEFT 65361
 # define ESC 65307
+
 // +------------------------------------------+ //
 //   Check file and map                         //
 // +------------------------------------------+ //
@@ -181,12 +179,15 @@ void	get_info_map(char *file, t_data *data);
 void	check_one(char *line, t_data *data);
 void	check_close(int height, t_data *data);
 void	get_player_position(int height, t_data *data);
+void	filled_floor_or_ceiling(int fd, char *line, t_data *data, char c);
+
 // +------------------------------------------+ //
 //   Parsing                                    //
 // +------------------------------------------+ //
 void 	get_element(int fd, char *line, t_data *data);
 void	get_map(int fd, char *line, t_data *data);
 t_bool	all_filled_up(t_data *data);
+
 // +------------------------------------------+ //
 //   ERROR and FREE                             //
 // +------------------------------------------+ //
@@ -195,10 +196,6 @@ void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data);
 void	free_everything(t_data *data);
 void	free_texture(t_data *data);
 
-<<<<<<< HEAD
-#endif
-
-=======
 // +------------------------------------------+ //
 //   Functions to initialize raycasting         //
 // +------------------------------------------+ //

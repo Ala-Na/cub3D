@@ -6,7 +6,7 @@
 #    By: anadege <anadege@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/13 17:24:14 by anadege          ###   ########.fr        #
+#    Updated: 2022/01/13 17:44:49 by anadege          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS = 	main.c\
 		check_map.c\
 		get_element.c\
 		get_map.c\
-		check_map2.c \
+		get_colour.c\
+		check_map2.c
 		$(SUB_SRCS_HOOKS) \
 		$(SUB_SRCS_RENDERING)
 
@@ -37,10 +38,6 @@ SUB_SRCS_RENDERING =	image_manip.c \
 						launching.c \
 						raycast_dda.c \
 						raycast_textures.c
-
-#TODO Ajouter sub_folders ex : $(SUB_SRCS_ARCHITECTURE) puis ajouter
-#TODO (suite ex) SUB_SRCS_ARCHITECTURE = 				\
-#TODO (suite ex) main.c ...
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 OBJS_DIR = .objs
@@ -79,5 +76,5 @@ re:			fclean all
 
 .PHONY: all clean fclean re
 
-vpath %.c #TODO ajouter path folders ex ./architecture
-vpath %.h . ./libft ./hooks ./rendering
+vpath %.c ./hooks ./rendering
+vpath %.h . ./libft ./minilibx-linux

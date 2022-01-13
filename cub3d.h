@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 19:06:54 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 21:12:28 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void	free_texture(t_data *data);
 //   Functions to initialize raycasting         //
 // +------------------------------------------+ //
 void    launch_engine(t_data *data);
+void	modify_map(t_data *data);
 void    convert_floor_and_ceiling_colors(t_data *data);
 
 // +------------------------------------------+ //

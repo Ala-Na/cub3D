@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:23:08 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 19:05:27 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 21:23:05 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ t_img   *get_corresponding_texture(t_data *data, t_ray *ray)
 {
     if (ray->side == 1)
     {
-        if (data->player->dir.y > 0)
+        if (ray->dir.y > 0)
             return &data->texture->no;
         return &data->texture->so;
     }
-    if (data->player->dir.x > 0)
-        return &data->texture->we;
-    return &data->texture->ea;
+    if (ray->dir.x > 0)
+        return &data->texture->ea;
+    return &data->texture->we;
 }
 
 void    raycast_textured_wall(t_data *data, t_ray *ray, int wall_height, t_img *img)

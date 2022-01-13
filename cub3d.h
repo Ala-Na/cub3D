@@ -6,7 +6,11 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/01/13 11:53:46 by anadege          ###   ########.fr       */
+=======
+/*   Updated: 2022/01/13 15:31:18 by anadege          ###   ########.fr       */
+>>>>>>> proper version of old renderer file
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +94,8 @@ typedef struct s_texture
 	char	*ea_file;
 	int		**f_file;
 	int		**c_file;
+	int		f_value;
+	int		c_value;
 	t_img	*no;
 	t_img	*so;
 	t_img	*we;
@@ -99,10 +105,12 @@ typedef struct s_texture
 typedef struct s_data
 {
 	void		*mlx;
+	int			screen_width;
+	int			screen_height;
 	void		*win;
 	char		**map;
 	t_map		*map_info;
-	t_texture	*textures;
+	t_texture	*texture;
 	t_player	*player;
 	t_img		*img;
 }				t_data;
@@ -122,7 +130,7 @@ typedef struct  s_ray
 
 typedef struct  s_stripe
 {
-    int     texture_number;
+    t_img	*texture;
     int     high_pixel;
     int     low_pixel;
     t_ivec  hit_coord;
@@ -192,5 +200,32 @@ void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data);
 void	free_everything(t_data *data);
 void	free_texture(t_data *data);
 
+<<<<<<< HEAD
 #endif
 
+=======
+// +------------------------------------------+ //
+//   Raycasting 'flat' rendering                //
+// +------------------------------------------+ //
+void	raycasting_algorithm(t_data *data);
+int		init_differential_diagnosis_analysis(t_data *data, t_ray *ray);
+int		differential_diagnosis_analysis(t_ray *ray, char **map);
+int		calculate_wall_height(t_ray *ray, int screen_height);
+
+// +------------------------------------------+ //
+//   Raycasting 'textured' rendering            //
+// +------------------------------------------+ //
+void	raycast_textured_wall(t_data *data, t_ray *ray, int wall_height);
+t_img   *get_corresponding_texture(t_data *data, t_ray *ray);
+int		get_texture_x_coordinate(t_player *player, t_img *texture, t_ray *ray);
+void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_height);
+int		get_corresponding_pixel_color(t_stripe *stripe, t_img *texture, double scale);
+
+// +------------------------------------------+ //
+//   Function for mlx manipulation              //
+// +------------------------------------------+ //
+int		convert_RGB_to_int(int t, int r, int g, int b);
+t_img	*generate_new_empty_image(void *mlx, int width, int height);
+
+#endif
+>>>>>>> proper version of old renderer file

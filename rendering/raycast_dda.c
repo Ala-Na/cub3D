@@ -6,14 +6,13 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 14:42:40 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:47:53 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "renderer.h"
-#include <stdio.h>
+#include "../cub3d.h"
 
-int calculate_wall_height(t_ray *ray)
+int calculate_wall_height(t_ray *ray, int screen_height)
 {
     int height;
 
@@ -21,11 +20,11 @@ int calculate_wall_height(t_ray *ray)
         ray->wall_dist = ray->side_dist.x - ray->delta_dist.x;
     else
         ray->wall_dist = ray->side_dist.y - ray->delta_dist.y;
-    height = (int)(SCREEN_HEIGHT / ray->wall_dist);
+    height = (int)(screen_height / ray->wall_dist);
     return height;
 }
 
-int dda_algorithm(t_ray *ray, char **map)
+int differential_diagnosis_analysis(t_ray *ray, char **map)
 {
     bool    hit;
     int     side;
@@ -45,51 +44,51 @@ int dda_algorithm(t_ray *ray, char **map)
             ray->box.y += ray->step.y;
             side = 1;
         }
-        if (map[ray->box.y][ray->box.x] > '0')
+        if (map[ray->box.y][ray->box.x] != '0')
             hit = true;
     }
     return side;
 }
 
-int    dda(t_player *player, t_ray *ray, char **map)
+int    init_differential_diagnosis_analysis(t_data *data, t_ray *ray)
 {
     if (ray->dir.x < 0)
     {
         ray->step.x = -1;
-        ray->side_dist.x = (player->pos.x - ray->box.x) * ray->delta_dist.x;
+        ray->side_dist.x = (data->player->pos.x - ray->box.x) * ray->delta_dist.x;
     }
     else
     {
         ray->step.x = 1;
-        ray->side_dist.x = (ray->box.x + 1.0 - player->pos.x) * ray->delta_dist.x;
+        ray->side_dist.x = (ray->box.x + 1.0 - data->player->pos.x) * ray->delta_dist.x;
     }
     if (ray->dir.y < 0)
     {
         ray->step.y = -1;
-        ray->side_dist.y = (player->pos.y - ray->box.y) * ray->delta_dist.y;
+        ray->side_dist.y = (data->player->pos.y - ray->box.y) * ray->delta_dist.y;
     }
     else
     {
         ray->step.y = 1;
-        ray->side_dist.y = (ray->box.y + 1.0 - player->pos.y) * ray->delta_dist.y;
+        ray->side_dist.y = (ray->box.y + 1.0 - data->player->pos.y) * ray->delta_dist.y;
     }
-    return dda_algorithm(ray, map);
+    return differential_diagnosis_analysis(ray, data->map);
 }
 
-void    raycasting_algorithm(t_param *param, t_img *img, t_player *player, char **map)
+void    raycasting_algorithm(t_data *data)
 {
     t_ray   ray;
     int     side;
     int     wall_height;
 
     ray.screen_x = 0;
-    while (ray.screen_x < SCREEN_WIDTH)
+    while (ray.screen_x < data->screen_width)
     {
-        ray.box.x = (int)player->pos.x;
-        ray.box.y = (int)player->pos.y;
-        ray.cam_pos_x = 2 * ray.screen_x / (double)SCREEN_WIDTH - 1;
-        ray.dir.x = player->dir.x + player->cam_plane.x * ray.cam_pos_x;
-        ray.dir.y = player->dir.y + player->cam_plane.y * ray.cam_pos_x;
+        ray.box.x = (int)data->player->pos.x;
+        ray.box.y = (int)data->player->pos.y;
+        ray.cam_pos_x = 2 * ray.screen_x / (double)data->screen_width - 1;
+        ray.dir.x = data->player->dir.x + data->player->cam_plane.x * ray.cam_pos_x;
+        ray.dir.y = data->player->dir.y + data->player->cam_plane.y * ray.cam_pos_x;
         if (ray.dir.x == 0)
             ray.delta_dist.x = 1e30;
         else
@@ -98,10 +97,11 @@ void    raycasting_algorithm(t_param *param, t_img *img, t_player *player, char 
             ray.delta_dist.y = 1e30;
         else
             ray.delta_dist.y = fabs(1 / ray.dir.y);
-        //TODO check if error with fabs
-        ray.side = dda(player, &ray, map);
-        wall_height = calculate_wall_height(&ray);
-        get_textured_wall(param, img, player, &ray, wall_height);
+        if (isnan(ray.delta_dist.x) != 0 || isnan(ray.delta_dist.y) != 0)
+            return; //TODO take error into account
+        ray.side = init_differential_diagnosis_analysis(data, &ray);
+        wall_height = calculate_wall_height(&ray, data->screen_height);
+        raycast_textured_wall(data, &ray, wall_height);
         ray.screen_x++;
     }
 }

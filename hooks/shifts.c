@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:05:41 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 18:30:23 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:22:20 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    move(int keycode, t_data *data)
 {
-    t_img   *old_img;
+    t_img   *new_img;
 
     if (keycode == MOVE_FOWARD)
         move_foward(data->player, data->map, data->map_info);
@@ -24,18 +24,16 @@ void    move(int keycode, t_data *data)
         move_right(data->player, data->map, data->map_info);
     else
         move_left(data->player, data->map, data->map_info);
-    old_img = data->img;
-    data->img = generate_new_empty_image(data, data->screen_height, data->screen_height);
-    if (data->img == NULL)
+    new_img = generate_new_empty_image(data, data->screen_height, data->screen_height);
+    if (new_img->img == NULL)
     {
-        mlx_destroy_image(data->mlx, old_img->img);
-        free(old_img);
         return; //TODO Error management
     }
-    raycasting_algorithm(data);
-    mlx_put_image_to_window(data->mlx, data->win, data->img->img, 0, 0);
-    mlx_destroy_image(data->mlx, old_img->img);
-    free(old_img);
+    raycasting_algorithm(data, new_img);
+    mlx_put_image_to_window(data->mlx, data->win, new_img->img, 0, 0);
+    //mlx_destroy_image(data->mlx, data->img->img);
+    //free(data->img);
+    data->img = new_img;
 }
 
 void    move_foward(t_player *player, char **map, t_map *map_info)
@@ -49,6 +47,7 @@ void    move_foward(t_player *player, char **map, t_map *map_info)
     new_y = (int)(player->pos.y + player->dir.y * (MOVE + 0.01));
     curr_x = (int)(player->pos.x);
     curr_y = (int)(player->pos.y);
+    //FIXME Error in map value
     if (new_x < map_info->width && new_x > 0 && map[curr_y][new_x] == '0')
     {
         player->pos.x += player->dir.x * MOVE;

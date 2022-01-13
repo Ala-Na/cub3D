@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 17:49:48 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:05:42 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int    init_differential_diagnosis_analysis(t_data *data, t_ray *ray)
     return differential_diagnosis_analysis(ray, data->map);
 }
 
-void    raycasting_algorithm(t_data *data)
+void    raycasting_algorithm(t_data *data, t_img *img)
 {
     t_ray   ray;
     int     wall_height;
@@ -100,7 +100,7 @@ void    raycasting_algorithm(t_data *data)
             return; //TODO take error into account
         ray.side = init_differential_diagnosis_analysis(data, &ray);
         wall_height = calculate_wall_height(&ray, data->screen_height);
-        raycast_textured_wall(data, &ray, wall_height);
+        raycast_textured_wall(data, &ray, wall_height, img);
         ray.screen_x++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 18:16:48 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:06:54 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct  s_stripe
 //   Typedef                                    //
 // +------------------------------------------+ //
 typedef int	t_bool;
+
 // +------------------------------------------+ //
 //   Define                                     //
 // +------------------------------------------+ //
@@ -205,7 +206,7 @@ void    convert_floor_and_ceiling_colors(t_data *data);
 // +------------------------------------------+ //
 //   Raycasting 'flat' rendering                //
 // +------------------------------------------+ //
-void	raycasting_algorithm(t_data *data);
+void	raycasting_algorithm(t_data *data, t_img *img);
 int		init_differential_diagnosis_analysis(t_data *data, t_ray *ray);
 int		differential_diagnosis_analysis(t_ray *ray, char **map);
 int		calculate_wall_height(t_ray *ray, int screen_height);
@@ -213,10 +214,10 @@ int		calculate_wall_height(t_ray *ray, int screen_height);
 // +------------------------------------------+ //
 //   Raycasting 'textured' rendering            //
 // +------------------------------------------+ //
-void	raycast_textured_wall(t_data *data, t_ray *ray, int wall_height);
+void	raycast_textured_wall(t_data *data, t_ray *ray, int wall_height, t_img *img);
 t_img   *get_corresponding_texture(t_data *data, t_ray *ray);
 int		get_texture_x_coordinate(t_player *player, t_img *texture, t_ray *ray);
-void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_height);
+void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_height, t_img *img);
 int		get_corresponding_pixel_color(t_stripe *stripe, t_img *texture, double scale);
 
 // +------------------------------------------+ //

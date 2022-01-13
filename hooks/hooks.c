@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:59:21 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 18:29:50 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:24:14 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int close_win_hook(t_data *data)
 {
-    printf("EXIT\n");
     free_everything(data);
     return (0);
 }
@@ -22,10 +21,7 @@ int close_win_hook(t_data *data)
 int key_press_hook(int keycode, t_data *data)
 {
     if (keycode == ESC)
-    {
-        printf("EXIT\n");
         free_everything(data);
-    }
     else if (keycode == MOVE_FOWARD || keycode == MOVE_BACKWARD
         || keycode == MOVE_LEFT || keycode == MOVE_RIGHT)
         move(keycode, data);

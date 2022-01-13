@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:18:29 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 18:24:57 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 19:13:23 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 void    rotate(int keycode, t_data *data)
 {
-    t_img   *old_img;
+    t_img   *new_img;
 
     if (keycode == ROTATE_RIGHT)
         rotate_right(data->player);
     else
         rotate_left(data->player);
-    old_img = data->img;
-    data->img = generate_new_empty_image(data, data->screen_height, data->screen_height);
-    if (data->img == NULL)
+    new_img = generate_new_empty_image(data, data->screen_height, data->screen_height);
+    if (new_img->img == NULL)
     {
-        mlx_destroy_image(data->mlx, old_img->img);
-        free(old_img);
         return; //TODO Error management
     }
-    raycasting_algorithm(data);
-    mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-    mlx_destroy_image(data->mlx, old_img->img);
-    free(old_img);
+    raycasting_algorithm(data, new_img);
+    mlx_put_image_to_window(data->mlx, data->win, new_img->img, 0, 0);
+    //mlx_destroy_image(data->mlx, data->img->img);
+    //free(data->img);
+    data->img = new_img;
 }
 
 void    rotate_right(t_player *player)
@@ -54,7 +52,6 @@ void    rotate_left(t_player *player)
 
     old_dir_x = player->dir.x;
     old_cam_plane_x = player->cam_plane.x;
-    printf("%f %f %f %f\n", player->pos.x, player->pos.y, player->dir.x, player->dir.y);
     player->dir.x = player->dir.x * cos(-ROTATE) - player->dir.y * sin(-ROTATE);
     player->dir.y = old_dir_x * sin(-ROTATE) + player->dir.y * cos(-ROTATE);
     player->cam_plane.x = player->cam_plane.x * cos(-ROTATE) - player->cam_plane.y * sin(-ROTATE); 

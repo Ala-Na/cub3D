@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:03:42 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 15:56:35 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:23:12 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 t_bool	all_filled_up(t_data *data)
 {
-	if (data->texture.no_file
-			&& data->texture.so_file
-			&& data->texture.we_file
-			&& data->texture.ea_file
-			&& data->texture.c_file
-			&& data->texture.f_file)
+	if (data->texture->no_file
+			&& data->texture->so_file
+			&& data->texture->we_file
+			&& data->texture->ea_file
+			&& data->texture->c_file
+			&& data->texture->f_file)
 				return (1);
 	return (0);
 }
@@ -60,7 +60,7 @@ void	check_file(char *file, t_data *data)
 		ret = get_next_line(fd, &line, 0);
 		if (ret == -1)
 			ft_error_during_gnl(ERROR_GNL, fd, line, data);
-		if (line && line[0] == '\0' && data->texture.flag_map == 1)
+		if (line && line[0] == '\0' && data->texture->flag_map == 1)
 			ft_error_during_gnl(ERROR_MAP_EMPTY_LINE, fd, line, data);
 		if (all_filled_up(data) && line && line[0])
 			get_map(fd, line, data);
@@ -70,8 +70,3 @@ void	check_file(char *file, t_data *data)
 	}
 	close(fd);
 }
-
-//TODO fonction get_map, pour la put dans un char ** (a faire apres avec un second gnl)
-//Permet d'obtenir des infos sur la taille de la map par exemple
-
-// doit recuperer d'abord les 6 infos essentielles sinon quit

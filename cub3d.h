@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/12 18:06:06 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/13 15:55:38 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,35 @@
 // +------------------------------------------+ //
 
 # include "libft/libft.h"
-//# include "mlx.h"
+# include "mlx.h"
 
 // +------------------------------------------+ //
 //   Structure                                  //
 // +------------------------------------------+ //
 
+typedef struct  t_dvec
+{
+	double  x;
+	double  y;
+}	t_dvec;
+
+typedef struct  t_ivec
+{
+	int x;
+	int y;
+}	t_ivec;
+
+typedef struct  s_player
+{
+	t_dvec  pos;
+	t_dvec  dir;
+	t_dvec  cam_plane;
+}	t_player;
 
 typedef struct s_map
 {
-	int			temp_h;
-	int			temp_w;
 	int			height;
 	int			width;
-	char		player_orientation;
-	int		player_height;
-	int		player_width;
 }				t_map;
 
 typedef struct s_img
@@ -69,19 +82,22 @@ typedef struct s_texture
 	char	*ea_file;
 	int		**f_file;
 	int		**c_file;
-	t_img	*no;
-	t_img	*so;
-	t_img	*we;
-	t_img	*ea;
+	t_img	no;
+	t_img	so;
+	t_img	we;
+	t_img	ea;
 }				t_texture;
 
 
 typedef struct s_data
 {
 	void		*mlx;
+	int			screen_width;
+	int			screen_height;
 	char		**map;
-	t_map		map_info;
-	t_texture	texture;
+	t_map		*map_info;
+	t_texture	*texture;
+	t_player	*player;
 }				t_data;
 
 // +------------------------------------------+ //
@@ -106,6 +122,7 @@ typedef int	t_bool;
 # define ERROR_MAP_WRONG_ELE	"ERROR\nMap have wrong element\n"
 # define ERROR_TWO_PLAYERS		"ERROR\nMap have more than one player\n"
 # define ERROR_NO_PLAYER		"ERROR\nNo player, No game :(\n"
+# define ERROR_IMG				"ERROR\nMlx image error\n"
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
 //TODO => Define les touches de clavier sur linux
 
@@ -118,6 +135,7 @@ void	get_info_map(char *file, t_data *data);
 void	check_one(char *line, t_data *data);
 void	check_close(int height, t_data *data);
 void	get_player_position(int height, t_data *data);
+void	filled_floor_or_ceiling(int fd, char *line, t_data *data, char c);
 // +------------------------------------------+ //
 //   Parsing                                    //
 // +------------------------------------------+ //

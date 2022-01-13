@@ -6,7 +6,7 @@
 #    By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/12 16:56:42 by fmonbeig         ###   ########.fr        #
+#    Updated: 2022/01/13 12:07:59 by fmonbeig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = 	main.c\
 		check_map.c\
 		get_element.c\
 		get_map.c\
+		get_colour.c\
 		check_map2.c
 
 #TODO Ajouter sub_folders ex : $(SUB_SRCS_ARCHITECTURE) puis ajouter

@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:18:29 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 16:00:56 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:15:17 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,24 @@
 
 void    rotate(int keycode, t_data *data)
 {
-    t_img   *new_img;
+    t_img   *old_img;
 
     if (keycode == ROTATE_RIGHT)
         rotate_right(data->player);
     else
         rotate_left(data->player);
+    old_img = data->img;
+    data->img = generate_new_empty_image(data, data->screen_height, data->screen_height);
+    if (data->img == NULL)
+    {
+        mlx_destroy_image(data->mlx, old_img->img);
+        free(old_img);
+        return; //TODO Error management
+    }
     raycasting_algorithm(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+    mlx_destroy_image(data->mlx, old_img->img);
+    free(old_img);
 }
 
 void    rotate_right(t_player *player)

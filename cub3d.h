@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 17:32:00 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:32:13 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,12 @@ void	free_texture(t_data *data);
 
 =======
 // +------------------------------------------+ //
+//   Functions to initialize raycasting         //
+// +------------------------------------------+ //
+void    launch_engine(t_data *data);
+void    convert_floor_and_ceiling_colors(t_data *data);
+
+// +------------------------------------------+ //
 //   Raycasting 'flat' rendering                //
 // +------------------------------------------+ //
 void	raycasting_algorithm(t_data *data);
@@ -229,5 +235,13 @@ void    fill_img_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixe
 void	set_hooks(t_data *data);
 int     key_press_hook(int keycode, t_data *data);
 int     close_win_hook(t_data *data);
+void	move(int keycode, t_data *data);
+void    move_foward(t_player *player, char **map, t_map *map_info);
+void    move_backward(t_player *player, char **map, t_map *map_info);
+void    move_right(t_player *player, char **map, t_map *map_info);
+void    move_left(t_player *player, char **map, t_map *map_info);
+void	rotate(int keycode, t_data *data);
+void	rotate_right(t_player *player);
+void	rotate_left(t_player *player);
 
 #endif

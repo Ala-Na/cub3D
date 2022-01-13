@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:29:57 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 15:41:20 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:20:10 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,18 @@ void    convert_floor_and_ceiling_colors(t_data *data)
 
 void    launch_engine(t_data *data)
 {
-    t_img   img;
-
     convert_floor_and_ceiling_colors(data);
-    data->mlx = mlx_init();
-    data->win = mlx_new_window(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Cub3D");
-    data->texture->f_value = 
-    img = generate_new_image(data->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-    if (img.img == NULL)
+    mlx_get_screen_size(data->mlx, &(data->screen_height), &(data->screen_height));
+    data->win = mlx_new_window(data->mlx, data->screen_height, data->screen_height, "Cub3D");
+    data->img = generate_new_empty_image(data->mlx, data->screen_height, data->screen_height);
+    if (data->img == NULL)
     {
         printf("ERROR EXIT\n");
         return; //TODO ADD ERROR, FREE MLX AND WIN
     }
-    data->img = &img;
-    raycasting_algorithm(data, &img, player, map);
-    mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
+    raycasting_algorithm(data);
+    mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
     set_hooks(data);
-    mlx_loop(data->mlx); 
+    mlx_loop(data->mlx);
+    free_everything(data); 
 }

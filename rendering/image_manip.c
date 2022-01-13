@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:02:38 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 15:31:00 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 15:43:36 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_img    *generate_new_empty_image(void *mlx, int width, int height)
     image->height = height;
     image->img = mlx_new_image(image->mlx, image->width, image->height);
     if (image->img == NULL)
-        return image; //TODO ADD ERROR
+        return NULL; //TODO ADD ERROR
     image->addr = mlx_get_data_addr(image->img, &(image->bits_per_pixel), &(image->line_length), &(image->endian));
     return image;
 }
@@ -50,7 +50,7 @@ t_img    *generate_new_empty_image(void *mlx, int width, int height)
 ** significant (blue, endian == 1) byte is the first one expected by the image.
 ** It fill buffer as a char* with correct value thanks to bitshifting and masking.
 */
-void    fill_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixel_color)
+void    fill_img_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixel_color)
 {
     int pixel_pos;
 

@@ -6,15 +6,10 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/01/13 11:53:46 by anadege          ###   ########.fr       */
-=======
-/*   Updated: 2022/01/13 15:31:18 by anadege          ###   ########.fr       */
->>>>>>> proper version of old renderer file
+/*   Updated: 2022/01/13 17:32:00 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
 # define CUB3D_H
 
 // +------------------------------------------+ //
@@ -222,10 +217,17 @@ void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_
 int		get_corresponding_pixel_color(t_stripe *stripe, t_img *texture, double scale);
 
 // +------------------------------------------+ //
-//   Function for mlx manipulation              //
+//   Functions for mlx manipulation             //
 // +------------------------------------------+ //
 int		convert_RGB_to_int(int t, int r, int g, int b);
 t_img	*generate_new_empty_image(void *mlx, int width, int height);
+void    fill_img_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixel_color);
+
+// +------------------------------------------+ //
+//   Functions hooks, shifts and rotations      //
+// +------------------------------------------+ //
+void	set_hooks(t_data *data);
+int     key_press_hook(int keycode, t_data *data);
+int     close_win_hook(t_data *data);
 
 #endif
->>>>>>> proper version of old renderer file

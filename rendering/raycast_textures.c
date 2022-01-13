@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:23:08 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 15:38:44 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 15:43:14 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_
     while (pixel_pos.y < stripe->high_pixel)
     {
         pixel_color = data->texture->c_value;
-        fill_buffer(data->img, &pixel_pos, pixel_color);
+        fill_img_buffer(data, data->img, &pixel_pos, pixel_color);
         pixel_pos.y++;
     }
     while (pixel_pos.y < stripe->low_pixel)
@@ -47,13 +47,13 @@ void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_
         pixel_color = get_corresponding_pixel_color(stripe, stripe->texture, scale);
         if (ray->side == 1)
             pixel_color = (pixel_color >> 1) & 8355711;
-        fill_buffer(data->img, &pixel_pos, pixel_color);
+        fill_img_buffer(data, data->img, &pixel_pos, pixel_color);
         pixel_pos.y++;
     }
     while (pixel_pos.y < data->screen_height)
     {
         pixel_color = data->texture->f_value;
-        fill_buffer(data->img, &pixel_pos, pixel_color);
+        fill_img_buffer(data, data->img, &pixel_pos, pixel_color);
         pixel_pos.y++;
     }
 }

@@ -6,19 +6,19 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:59:21 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 14:29:46 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 15:59:25 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int     close_win_hook(t_data *data)
+int close_win_hook(t_data *data)
 {
     printf("EXIT\n");
     free_everything(data);
 }
 
-int     key_press_hook(int keycode, t_data *data)
+int key_press_hook(int keycode, t_data *data)
 {
     if (keycode == ESC)
     {

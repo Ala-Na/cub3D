@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/07 00:01:34 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/12 15:26:49 by fmonbeig         ###   ########.fr       */
+/*   Created: 2021/11/10 10:37:01 by llalba            #+#    #+#             */
+/*   Updated: 2022/01/11 12:16:03 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	ft_free_split(char **ptr)
 {
-	void			*ptr;
-	unsigned char	*res;
-	size_t			total;
+	int	i;
 
-	total = nmemb * size;
-	if (!(total))
-		total = 1;
-	ptr = malloc(total);
-	if (!ptr)
-		return (NULL);
-	res = (unsigned char *)ptr;
-	while (total > 0)
+	i = 0;
+	if (ptr == NULL)
+		return ;
+	while (ptr[i])
 	{
-		*res++ = '\0';
-		total--;
+		free (ptr[i]);
+		i++;
 	}
-	return (ptr);
+	free(ptr);
 }

@@ -1,133 +1,124 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anadege <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:43:23 by anadege           #+#    #+#             */
-/*   Updated: 2021/06/22 15:17:09 by elanna           ###   ########.fr       */
+/*   Updated: 2022/01/11 16:23:10 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_delcont(int fd, t_content **content)
+static char	*save_line(char *str)
 {
-	t_content	*fd_content;
-	t_content	*prev_content;
+	int		i;
+	char	*line;
 
-	prev_content = *content;
-	if (prev_content->fd == fd && !prev_content->next)
-	{
-		free(prev_content);
-		*content = NULL;
-		return ;
-	}
-	else if (prev_content->fd == fd && prev_content->next)
-	{
-		*content = prev_content->next;
-		free(prev_content);
-		return ;
-	}
-	while (prev_content->next != NULL && (prev_content->next)->fd != fd)
-	{
-		prev_content = prev_content->next;
-	}
-	fd_content = prev_content->next;
-	prev_content->next = fd_content->next;
-	free(fd_content);
-	return ;
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str[i] && str[i] != '\n')
+		i++;
+	line = malloc(sizeof(char) * i + 1);
+	if (!line)
+		return (NULL);
+	i = -1;
+	while (str[++i] && str[i] != '\n')
+		line[i] = str[i];
+	line[i] = '\0';
+	return (line);
 }
 
-t_content	*ft_contchr_fd(t_content **lst, int fd)
+static char	*save_rest(char *save)
 {
-	t_content	*list;
+	int		i;
+	int		j;
+	char	*ret;
 
-	list = *lst;
-	while (list)
+	i = 0;
+	j = 0;
+	while (save[i] && save[i] != '\n')
+		i++;
+	if (save[i] == '\0')
 	{
-		if (fd == list->fd)
-			return (list);
-		list = list->next;
+		free(save);
+		save = NULL;
+		return (NULL);
 	}
-	return (NULL);
+	ret = malloc(sizeof(char) * (ft_strlen(save) - i + 1));
+	if (!ret)
+		return (NULL);
+	while (save[++i])
+		ret[j++] = save[i];
+	ret[j] = '\0';
+	free(save);
+	save = NULL;
+	return (ret);
 }
 
-int	get_content_line(int fd, char **line, ssize_t rd, t_content **cont)
+static int	nextline(char *str)
 {
-	t_content	*fd_content;
-	char		*ptr;
-	char		*tmp;
+	int	i;
 
-	fd_content = ft_contchr_fd(cont, fd);
-	if (*cont && !fd_content)
-		return (-1);
-	if (rd == 0 && (!*cont || !(fd_content->buffer)))
-	{
-		*line = ft_strdup("");
+	i = -1;
+	if (!str)
 		return (0);
-	}
-	ptr = ft_strchr_for_gnl(fd_content->buffer, '\n', 1);
-	if (ptr != NULL)
-	{
-		*line = ft_strdup(fd_content->buffer);
-		tmp = ft_strdup(++ptr);
-		free(fd_content->buffer);
-		fd_content->buffer = tmp;
-		return (1);
-	}
-	*line = fd_content->buffer;
-	fd_content->buffer = NULL;
-	ft_delcont(fd, cont);
+	while (str[++i])
+		if (str[i] == '\n')
+			return (1);
 	return (0);
 }
 
-void	fill_content_struct(t_content **content, char *buffer, int fd)
+static int	result(int ret, char **line, char **save)
 {
-	char		*tmp_buffer;
-	t_content	*fd_content;
-
-	if (!*content)
-		*content = ft_contnew(buffer, fd);
-	else
+	*line = save_line(*save);
+	*save = save_rest(*save);
+	if (*save == NULL)
 	{
-		fd_content = ft_contchr_fd(content, fd);
-		if (fd_content != NULL)
-		{
-			tmp_buffer = ft_strjoin(fd_content->buffer, buffer);
-			free(fd_content->buffer);
-			fd_content->buffer = tmp_buffer;
-		}
-		else
-			ft_contadd_back(content, ft_contnew(buffer, fd));
+		free (*save);
+		*save = NULL;
 	}
+	if (ret == 0 && *save == NULL)
+	{
+		free(*line);
+		*line = NULL;
+		return (0);
+	}
+	return (1);
 }
 
-int	get_next_line(int fd, char **line)
-{
-	static t_content	*content;
-	char				buffer[BUFFER_SIZE + 1];
-	t_content			*fd_content;
-	ssize_t				size_read;
-	char				*new_line;
+//Flag to free *save when GNL has to be interrupt
+// 1 = free save     0 = do nothing
 
-	if (fd < 0 || line == NULL || BUFFER_SIZE <= 0)
-		return (-1);
-	size_read = read(fd, buffer, BUFFER_SIZE);
-	while (size_read > 0)
+int	get_next_line(int fd, char **line, int flag)
+{
+	char		buff[BUFFER_SIZE + 1];
+	static char	*save;
+	int			ret;
+
+	if (flag)
 	{
-		buffer[size_read] = '\0';
-		fill_content_struct(&content, buffer, fd);
-		fd_content = ft_contchr_fd(&content, fd);
-		if (!fd_content)
+		if (save)
+			free(save);
+		return (0);
+	}
+	ret = 1;
+	if (!line || fd < 0 || BUFFER_SIZE <= 0)
+		return (-1);
+	while (!nextline(save) && ret != 0)
+	{
+		ret = read(fd, buff, BUFFER_SIZE);
+		if (ret < 0)
 			return (-1);
-		new_line = ft_strchr_for_gnl(fd_content->buffer, '\n', 0);
-		if (new_line != NULL)
-			break ;
-		size_read = read(fd, buffer, BUFFER_SIZE);
+		buff[ret] = '\0';
+		if (!save)
+			save = ft_strdup(buff);
+		else
+			save = ft_strjoin_get_next_line(save, buff);
 	}
-	if (size_read < 0)
-		return (-1);
-	return (get_content_line(fd, line, size_read, &content));
+	return (result(ret, line, &save));
 }
+

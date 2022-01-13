@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlichir <hlichir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 22:06:44 by elanna            #+#    #+#             */
-/*   Updated: 2021/10/14 13:22:08 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:38:47 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int						ft_isblank(char c);
 char					*ft_strjoin_free(char **s1, char **s2, int free_s1, \
 							int free_s2);
 char					*ft_strdup_free(char **s, int to_free);
+void					ft_free_split(char **ptr);
 
 /*
 ** Following : All prototypes functions for get_next_line-like.
@@ -144,7 +145,8 @@ int						get_content_line(int fd, char **line, ssize_t rd,
 							t_content **cont);
 void					fill_content_struct(t_content **content, char *buffer,
 							int fd);
-int						get_next_line(int fd, char **line);
+int						get_next_line(int fd, char **line, int flag);
+char					*ft_strjoin_get_next_line(const char *s1, const char *s2);
 
 /*
 ** Following : Functions to print wide characters.

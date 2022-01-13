@@ -1,60 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elanna <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 17:01:55 by elanna            #+#    #+#             */
-/*   Updated: 2021/06/22 15:17:21 by elanna           ###   ########.fr       */
+/*   Updated: 2022/01/10 16:37:45 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_content	*ft_contnew(char *buffer, int fd)
+char	*ft_strjoin_get_next_line(const char *s1, const char *s2)
 {
-	t_content	*new;
+	char	*str;
+	int		i;
 
-	new = malloc(sizeof(*new));
-	if (!new)
+	i = -1;
+	if (!s1 || !s2)
 		return (NULL);
-	new->buffer = ft_strdup(buffer);
-	new->fd = fd;
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_contadd_back(t_content **alst, t_content *new)
-{
-	t_content	*last;
-
-	if (!new)
-		return ;
-	else if (!*alst)
-	{
-		*alst = new;
-		return ;
-	}
-	last = *alst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-}
-
-char	*ft_strchr_for_gnl(char *s, int c, int replace)
-{
-	while (s && *s)
-	{
-		if (*s == (char)c)
-		{
-			if (replace == 1)
-				*s = 0;
-			return ((char *)s);
-		}
-		s++;
-	}
-	if (c == 0 && *s == 0)
-		return ((char *)s);
-	return (0);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	while (s1[++i])
+		str[i] = s1[i];
+	while (*s2)
+		str[i++] = *s2++;
+	str[i] = 0;
+	free ((char *) s1);
+	return (str);
 }

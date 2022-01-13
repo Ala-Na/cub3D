@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 17:43:58 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:21:01 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	init_data(t_data *data)
 {
+	data->mlx = mlx_init(); 
+	//TODO if NULL
 	data->map_info = malloc(sizeof(t_map));
 	data->texture = malloc(sizeof(t_texture));
 	data->player = malloc(sizeof(t_player));
@@ -34,27 +36,27 @@ static void	init_data(t_data *data)
 
 static void	init_img(t_data *data)
 {
-	data->texture->no.img = mlx_xpm_file_to_image(data->mlx, data->texture->no.width,
+	data->texture->no.img = mlx_xpm_file_to_image(data->mlx, data->texture->no_file,
 			&data->texture->no.width, &data->texture->no.height);
-	mlx_get_data_addr(data->texture->no.img, &data->texture->no.bits_per_pixel,
+	data->texture->no.addr = mlx_get_data_addr(data->texture->no.img, &data->texture->no.bits_per_pixel,
 			&data->texture->no.line_length, &data->texture->no.endian);
 	if(!data->texture->no.img)
 		ft_error(ERROR_IMG, data);
-	data->texture->so.img = mlx_xpm_file_to_image(data->mlx, data->texture->so.width,
+	data->texture->so.img = mlx_xpm_file_to_image(data->mlx, data->texture->so_file,
 			&data->texture->so.width, &data->texture->so.height);
-	mlx_get_data_addr(data->texture->so.img, &data->texture->so.bits_per_pixel,
+	data->texture->so.addr = mlx_get_data_addr(data->texture->so.img, &data->texture->so.bits_per_pixel,
 			&data->texture->so.line_length, &data->texture->so.endian);
 	if(!data->texture->so.img)
 		ft_error(ERROR_IMG, data);
-	data->texture->ea.img = mlx_xpm_file_to_image(data->mlx, data->texture->ea.width,
+	data->texture->ea.img = mlx_xpm_file_to_image(data->mlx, data->texture->ea_file,
 			&data->texture->ea.width, &data->texture->ea.height);
-	mlx_get_data_addr(data->texture->ea.img, &data->texture->ea.bits_per_pixel,
+	data->texture->ea.addr = mlx_get_data_addr(data->texture->ea.img, &data->texture->ea.bits_per_pixel,
 			&data->texture->ea.line_length, &data->texture->ea.endian);
 	if(!data->texture->ea.img)
 		ft_error(ERROR_IMG, data);
-	data->texture->we.img = mlx_xpm_file_to_image(data->mlx, data->texture->we.width,
+	data->texture->we.img = mlx_xpm_file_to_image(data->mlx, data->texture->we_file,
 			&data->texture->we.width, &data->texture->we.height);
-	mlx_get_data_addr(data->texture->we.img, &data->texture->we.bits_per_pixel,
+	data->texture->we.addr = mlx_get_data_addr(data->texture->we.img, &data->texture->we.bits_per_pixel,
 			&data->texture->we.line_length, &data->texture->we.endian);
 	if(!data->texture->we.img)
 		ft_error(ERROR_IMG, data);
@@ -71,6 +73,7 @@ int	main(int argc, char **argv)
 		check_file(argv[1], &data);
 		check_map(&data);
 		init_img(&data);
+		launch_engine(&data);
 		free_everything(&data);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:05:41 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 17:32:23 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:30:23 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void    move(int keycode, t_data *data)
         return; //TODO Error management
     }
     raycasting_algorithm(data);
+    mlx_put_image_to_window(data->mlx, data->win, data->img->img, 0, 0);
     mlx_destroy_image(data->mlx, old_img->img);
     free(old_img);
 }
@@ -69,6 +70,7 @@ void    move_backward(t_player *player, char **map, t_map *map_info)
     curr_x = (int)(player->pos.x);
     curr_y = (int)(player->pos.y);
     if (new_x < map_info->width && new_x > 0 && map[curr_y][new_x] == '0')
+    {
         player->pos.x -= player->dir.x * MOVE;
         curr_x = (int)(player->pos.x);
     }

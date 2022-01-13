@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:02:38 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 15:43:36 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:17:25 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ int	convert_RGB_to_int(int t, int r, int g, int b)
 ** Function which returns a new t_img structure, filling it's information.
 ** Returns NULL in case of error.
 */
-t_img    *generate_new_empty_image(void *mlx, int width, int height)
+t_img    *generate_new_empty_image(t_data *data, int width, int height)
 {
     t_img   *image;
     
-    image = malloc(sizeof(image));
-    image->mlx = mlx;
+    image = malloc(sizeof(*image));
+    if (image == NULL)
+        return NULL; //TODO ERROR MSG
+    image->mlx = data->mlx;
     image->width = width;
     image->height = height;
-    image->img = mlx_new_image(image->mlx, image->width, image->height);
+    image->img = mlx_new_image(data->mlx, image->width, image->height);
     if (image->img == NULL)
         return NULL; //TODO ADD ERROR
     image->addr = mlx_get_data_addr(image->img, &(image->bits_per_pixel), &(image->line_length), &(image->endian));

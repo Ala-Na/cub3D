@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:18:29 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 17:15:17 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:24:57 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void    rotate_left(t_player *player)
 
     old_dir_x = player->dir.x;
     old_cam_plane_x = player->cam_plane.x;
+    printf("%f %f %f %f\n", player->pos.x, player->pos.y, player->dir.x, player->dir.y);
     player->dir.x = player->dir.x * cos(-ROTATE) - player->dir.y * sin(-ROTATE);
     player->dir.y = old_dir_x * sin(-ROTATE) + player->dir.y * cos(-ROTATE);
     player->cam_plane.x = player->cam_plane.x * cos(-ROTATE) - player->cam_plane.y * sin(-ROTATE); 

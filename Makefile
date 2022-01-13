@@ -6,7 +6,7 @@
 #    By: anadege <anadege@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/13 17:44:49 by anadege          ###   ########.fr        #
+#    Updated: 2022/01/13 17:47:17 by anadege          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -MMD -I$(HEADER_DIR)
-LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm libft/libft.a #TODO check if minilibx flags are working, and modify it if needed
+LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm libft/libft.a
 LIB_PATH = libft/.
 
 SRCS_DIR = .
@@ -26,7 +26,7 @@ SRCS = 	main.c\
 		get_element.c\
 		get_map.c\
 		get_colour.c\
-		check_map2.c
+		check_map2.c\
 		$(SUB_SRCS_HOOKS) \
 		$(SUB_SRCS_RENDERING)
 

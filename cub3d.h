@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 17:42:43 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:16:48 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int		get_corresponding_pixel_color(t_stripe *stripe, t_img *texture, double scal
 //   Functions for mlx manipulation             //
 // +------------------------------------------+ //
 int		convert_RGB_to_int(int t, int r, int g, int b);
-t_img	*generate_new_empty_image(void *mlx, int width, int height);
+t_img	*generate_new_empty_image(t_data *data, int width, int height);
 void    fill_img_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixel_color);
 
 // +------------------------------------------+ //

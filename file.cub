@@ -1,11 +1,11 @@
-EA ./path_to_the_east_texture
-NO ./path_to_the_north_texture
+EA ./textures/blue.xpm
+NO ./textures/cheddar.xpm
 
 C 225,30,0
 
-WE ./path_to_the_west_texture
+WE ./textures/draw_cheese.xpm
 
-SO ./path_to_the_so_texture
+SO ./textures/mouse_cheese.xpm
 
 F 100,0,65
 

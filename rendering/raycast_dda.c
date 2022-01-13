@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:31:12 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 14:47:53 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:49:48 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int    init_differential_diagnosis_analysis(t_data *data, t_ray *ray)
 void    raycasting_algorithm(t_data *data)
 {
     t_ray   ray;
-    int     side;
     int     wall_height;
 
     ray.screen_x = 0;

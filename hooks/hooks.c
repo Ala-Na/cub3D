@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:59:21 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 15:59:25 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/13 18:29:50 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int close_win_hook(t_data *data)
 {
     printf("EXIT\n");
     free_everything(data);
+    return (0);
 }
 
 int key_press_hook(int keycode, t_data *data)
@@ -35,6 +36,6 @@ int key_press_hook(int keycode, t_data *data)
 
 void    set_hooks(t_data *data)
 {
-    mlx_hook(data->win, KeyPress, KeyPressMask, key_press_hook, &data);
-    mlx_hook(data->win, DestroyNotify, StructureNotifyMask, close_win_hook, &data);
+    mlx_hook(data->win, KeyPress, KeyPressMask, key_press_hook, data);
+    mlx_hook(data->win, DestroyNotify, StructureNotifyMask, close_win_hook, data);
 }

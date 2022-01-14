@@ -6,7 +6,7 @@
 #    By: anadege <anadege@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/14 22:48:23 by anadege          ###   ########.fr        #
+#    Updated: 2022/01/14 23:06:46 by anadege          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = cub3d
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -MMD -I$(HEADER_DIR)
 LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm libft/libft.a
-LIB_PATH = libft/.
+LIB_PATH = libft/. 
 
 SRCS_DIR = .
 
@@ -61,9 +61,9 @@ MAKE = make
 MAKE_DIR = mkdir -p
 MAKE_RM = rm -f
 
-all: libft.a $(NAME)
+all: libft.a libmlx.a $(NAME)
 
-$(NAME):	$(OBJS) libft/libft.a
+$(NAME):	$(OBJS) libft/libft.a minilibx-linux/libmlx.a
 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIB_FLAGS)
 
 -include $(PREREQ)
@@ -76,6 +76,9 @@ $(OBJS_DIR):
 
 libft.a:
 			$(MAKE) -C libft
+
+libmlx.a:
+			$(MAKE) -C minilibx-linux
 
 clean:
 			$(MAKE_RM) -r $(OBJS_DIR)

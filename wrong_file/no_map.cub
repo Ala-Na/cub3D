@@ -1,0 +1,7 @@
+WE ./textures/cheese_museum.xpm
+EA ./textures/cheese_museum2.xpm
+NO ./textures/cheese_art.xpm
+SO ./textures/toilet_door.xpm
+
+F 220,210,185
+C 196,156,63

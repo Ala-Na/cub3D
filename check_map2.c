@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 17:56:19 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 21:10:37 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 18:08:26 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_one(char *line, t_data *data)
 	i = 0;
 	if (line[0] != '1')
 		ft_error(ERROR_MAP_NOT_CLOSE, data);
-	while(line[i])
+	while (line[i])
 		++i;
 	if (line[i - 1] != '1')
 		ft_error(ERROR_MAP_NOT_CLOSE, data);
@@ -30,7 +30,7 @@ void	check_close(int height, t_data *data)
 	int	width;
 
 	width = -1;
-	while(data->map[height][++width])
+	while (data->map[height][++width])
 	{
 		if (data->map[height][width] != '1')
 		{
@@ -48,17 +48,17 @@ static void	get_player_direction(char c, t_data *data)
 		data->player->dir.x = 0;
 		data->player->dir.y = -1;
 	}
-		if (c == 'S')
+	if (c == 'S')
 	{
 		data->player->dir.x = 0;
 		data->player->dir.y = 1;
 	}
-		if (c == 'E')
+	if (c == 'E')
 	{
 		data->player->dir.x = 1;
 		data->player->dir.y = 0;
 	}
-		if (c == 'W')
+	if (c == 'W')
 	{
 		data->player->dir.x = -1;
 		data->player->dir.y = 0;
@@ -72,17 +72,17 @@ static void	get_player_camera_plane(char c, t_data *data)
 		data->player->cam_plane.x = 0.66;
 		data->player->cam_plane.y = 0;
 	}
-		if (c == 'S')
+	if (c == 'S')
 	{
 		data->player->cam_plane.x = -0.66;
 		data->player->cam_plane.y = 0;
 	}
-		if (c == 'E')
+	if (c == 'E')
 	{
 		data->player->cam_plane.x = 0;
 		data->player->cam_plane.y = 0.66;
 	}
-		if (c == 'W')
+	if (c == 'W')
 	{
 		data->player->cam_plane.x = 0;
 		data->player->cam_plane.y = -0.66;
@@ -95,7 +95,7 @@ void	get_player_position(int height, t_data *data)
 	int			width;
 
 	width = -1;
-	while(data->map[height][++width])
+	while (data->map[height][++width])
 	{
 		if (data->map[height][width] == 'N' ||
 				data->map[height][width] == 'S' ||

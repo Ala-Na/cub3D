@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:43:15 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 11:32:39 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 18:09:12 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	ft_error(char *error_message, t_data *data)
 	free_everything(data);
 }
 
-void	ft_error_during_gnl(char *error_message, int fd, char *line, t_data *data)
+void	ft_error_during_gnl(char *error_message, int fd,
+		char *line, t_data *data)
 {
 	get_next_line(fd, &line, 1);
 	free(line);
@@ -76,7 +77,6 @@ void	destroy_image(t_data *data)
 	if (data->texture && data->texture->we.img)
 		mlx_destroy_image(data->mlx, data->texture->we.img);
 }
-
 
 void	free_everything(t_data *data)
 {

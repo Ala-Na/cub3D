@@ -1,42 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_and_free.c                                   :+:      :+:    :+:   */
+/*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:43:15 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 18:09:12 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/14 23:03:42 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/***
- * ft_error : send a error message and exit the program properly.
- * 			if NULL is pass to error_message, we use perror instead.
-***/
-void	ft_error(char *error_message, t_data *data)
-{
-	if (!error_message)
-		perror("ERROR\n");
-	else
-		write(2, error_message, ft_strlen(error_message));
-	free_everything(data);
-}
-
-void	ft_error_during_gnl(char *error_message, int fd,
-		char *line, t_data *data)
-{
-	get_next_line(fd, &line, 1);
-	free(line);
-	close(fd);
-	if (!error_message)
-		perror("ERROR\n");
-	else
-		write(2, error_message, ft_strlen(error_message));
-	free_everything(data);
-}
 
 static void	free_int_double_pointer(int numb, int **temp)
 {

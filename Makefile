@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+         #
+#    By: anadege <anadege@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/13 12:07:59 by fmonbeig         ###   ########.fr        #
+#    Updated: 2022/01/13 17:47:17 by anadege          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -MMD -I$(HEADER_DIR)
-LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm libft/libft.a #TODO check if minilibx flags are working, and modify it if needed
+LIB_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm libft/libft.a
 LIB_PATH = libft/.
 
 SRCS_DIR = .
@@ -26,11 +26,18 @@ SRCS = 	main.c\
 		get_element.c\
 		get_map.c\
 		get_colour.c\
-		check_map2.c
+		check_map2.c\
+		$(SUB_SRCS_HOOKS) \
+		$(SUB_SRCS_RENDERING)
 
-#TODO Ajouter sub_folders ex : $(SUB_SRCS_ARCHITECTURE) puis ajouter
-#TODO (suite ex) SUB_SRCS_ARCHITECTURE = 				\
-#TODO (suite ex) main.c ...
+SUB_SRCS_HOOKS =	hooks.c \
+					rotations.c \
+					shifts.c
+
+SUB_SRCS_RENDERING =	image_manip.c \
+						launching.c \
+						raycast_dda.c \
+						raycast_textures.c
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 OBJS_DIR = .objs
@@ -69,5 +76,5 @@ re:			fclean all
 
 .PHONY: all clean fclean re
 
-vpath %.c #TODO ajouter path folders ex ./architecture
-vpath %.h . ./libft
+vpath %.c ./hooks ./rendering
+vpath %.h . ./libft ./minilibx-linux

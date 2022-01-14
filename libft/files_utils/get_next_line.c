@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:43:23 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/11 16:23:10 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/14 22:51:30 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,3 @@ int	get_next_line(int fd, char **line, int flag)
 	}
 	return (result(ret, line, &save));
 }
-

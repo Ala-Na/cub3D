@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 22:06:44 by elanna            #+#    #+#             */
-/*   Updated: 2022/01/10 16:38:47 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/14 22:51:14 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ int						get_content_line(int fd, char **line, ssize_t rd,
 void					fill_content_struct(t_content **content, char *buffer,
 							int fd);
 int						get_next_line(int fd, char **line, int flag);
-char					*ft_strjoin_get_next_line(const char *s1, const char *s2);
+char					*ft_strjoin_get_next_line(const char *s1,
+							const char *s2);
 
 /*
 ** Following : Functions to print wide characters.

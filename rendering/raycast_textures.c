@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 16:23:08 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/14 18:17:18 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 22:55:46 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe,
 	pixel_pos.y = -1;
 	while (++pixel_pos.y < stripe->high_pixel)
 		fill_img_buffer(data, img, &pixel_pos, data->texture->c_value);
+	pixel_pos.y--;
 	while (++pixel_pos.y < stripe->low_pixel)
 	{
 		pixel_color = get_corresponding_pixel_color(stripe,
@@ -50,6 +51,7 @@ void	show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe,
 			pixel_color = (pixel_color >> 1) & 8355711;
 		fill_img_buffer(data, img, &pixel_pos, pixel_color);
 	}
+	pixel_pos.y--;
 	while (++pixel_pos.y < data->screen_height)
 		fill_img_buffer(data, img, &pixel_pos, data->texture->f_value);
 }

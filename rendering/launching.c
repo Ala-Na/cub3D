@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:29:57 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 21:05:32 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:12:12 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void    launch_engine(t_data *data)
         printf("ERROR EXIT\n");
         return; //TODO ADD ERROR, FREE MLX AND WIN
     }
+    data->img = new_img;
     raycasting_algorithm(data, new_img);
     mlx_put_image_to_window(data->mlx, data->win, new_img->img, 0, 0);
     set_hooks(data);

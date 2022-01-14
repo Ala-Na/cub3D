@@ -6,20 +6,34 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 20:43:16 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:27:11 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	security_init(t_data *data)
+{
+	data->mlx = NULL;
+	data->screen_width = -1;
+	data->screen_height = -1;
+	data->win = NULL;
+	data->map = NULL;
+	data->map_info = NULL;
+	data->texture = NULL;
+	data->player = NULL;
+	data->img = NULL;
+}
+
 static void	init_data(t_data *data)
 {
+	security_init(data);
 	data->mlx = mlx_init(); 
-	//TODO if NULL
+	if (data->mlx == NULL)
+		ft_error(ERROR_MLX, data);
 	data->map_info = malloc(sizeof(t_map));
 	data->texture = malloc(sizeof(t_texture));
 	data->player = malloc(sizeof(t_player));
-	data->map = 0;
 	data->map_info->height = 0;
 	data->map_info->width = 0;
 	data->texture->no_file = 0;

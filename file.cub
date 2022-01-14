@@ -1,9 +1,9 @@
 C 196,156,63
 
-WE ./textures/draw_cheese.xpm
-EA ./textures/blue.xpm
-NO ./textures/cheddar.xpm
-SO ./textures/mouse_cheese.xpm
+WE ./textures/cheese_museum.xpm
+EA ./textures/cheese_museum2.xpm
+NO ./textures/cheese_art.xpm
+SO ./textures/toilet_door.xpm
 
 F 220,210,185
 

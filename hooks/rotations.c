@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:18:29 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/13 20:55:34 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:14:20 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void    rotate(int keycode, t_data *data)
     }
     raycasting_algorithm(data, new_img);
     mlx_put_image_to_window(data->mlx, data->win, new_img->img, 0, 0);
-    //mlx_destroy_image(data->mlx, data->img->img);
-    //free(data->img);
+    mlx_destroy_image(data->mlx, data->img->img);
+    free(data->img);
     data->img = new_img;
 }
 

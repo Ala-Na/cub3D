@@ -3,29 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 16:03:42 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 17:38:50 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 18:07:41 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-t_bool	all_filled_up(t_data *data)
+bool	all_filled_up(t_data *data)
 {
 	if (data->texture->no_file
-			&& data->texture->so_file
-			&& data->texture->we_file
-			&& data->texture->ea_file
-			&& data->texture->c_file
-			&& data->texture->f_file)
-				return (1);
+		&& data->texture->so_file
+		&& data->texture->we_file
+		&& data->texture->ea_file
+		&& data->texture->c_file
+		&& data->texture->f_file)
+		return (1);
 	return (0);
 }
 
-static void	check_extension(char *file, t_data *data)
+void	check_extension(char *file, t_data *data)
 {
 	int	i;
 
@@ -33,15 +32,15 @@ static void	check_extension(char *file, t_data *data)
 	while (file[i])
 		i++;
 	if (file[--i] != 'b')
-		ft_error(ERROR_NAME_MAP,data);
+		ft_error(ERROR_NAME_MAP, data);
 	if (file[--i] != 'u')
-		ft_error(ERROR_NAME_MAP,data);
+		ft_error(ERROR_NAME_MAP, data);
 	if (file[--i] != 'c')
-		ft_error(ERROR_NAME_MAP,data);
+		ft_error(ERROR_NAME_MAP, data);
 	if (file[--i] != '.')
-		ft_error(ERROR_NAME_MAP,data);
+		ft_error(ERROR_NAME_MAP, data);
 	if (ft_strlen(file) <= 4)
-		ft_error(ERROR_NAME_MAP,data);
+		ft_error(ERROR_NAME_MAP, data);
 }
 
 void	check_file(char *file, t_data *data)

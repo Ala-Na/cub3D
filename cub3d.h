@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 11:37:39 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 17:34:01 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <errno.h>
 # include <string.h>
@@ -128,12 +129,6 @@ typedef struct  s_stripe
     double  pos;
 }   t_stripe;
 
-
-// +------------------------------------------+ //
-//   Typedef                                    //
-// +------------------------------------------+ //
-typedef int	t_bool;
-
 // +------------------------------------------+ //
 //   Define                                     //
 // +------------------------------------------+ //
@@ -149,10 +144,12 @@ typedef int	t_bool;
 # define ERROR_COLOUR_NOT_RGB	"ERROR\nNumber must be between 0 and 255 for RGB\n"
 # define ERROR_MAP_IS_TO_BIG	"ERROR\nMap is to big\n"
 # define ERROR_MAP_EMPTY_LINE	"ERROR\nMap have an empty line\n"
+# define ERROR_MAP_IS_NOT_REAL	"ERROR\nVery funny... Where is the map ?\n"
 # define ERROR_MAP_NOT_CLOSE	"ERROR\nMap is not close\n"
 # define ERROR_MAP_WRONG_ELE	"ERROR\nMap have wrong element\n"
 # define ERROR_TWO_PLAYERS		"ERROR\nMap have more than one player\n"
 # define ERROR_NO_PLAYER		"ERROR\nNo player, No game :(\n"
+# define ERROR_DIRECTORY		"ERROR\nOops... the file is a directory\n"
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
 # define ERROR_IMG				"ERROR\nMlx image error\n"
 # define ERROR_MLX				"ERROR\nMlx can't be launched\n"
@@ -178,18 +175,36 @@ typedef int	t_bool;
 // +------------------------------------------+ //
 void	check_file(char *map, t_data *data);
 void	check_map(t_data *data);
-void	get_info_map(char *file, t_data *data);
 void	check_one(char *line, t_data *data);
 void	check_close(int height, t_data *data);
-void	get_player_position(int height, t_data *data);
-void	filled_floor_or_ceiling(int fd, char *line, t_data *data, char c);
+void	check_extension(char *file, t_data *data);
 
 // +------------------------------------------+ //
 //   Parsing                                    //
 // +------------------------------------------+ //
 void 	get_element(int fd, char *line, t_data *data);
 void	get_map(int fd, char *line, t_data *data);
-t_bool	all_filled_up(t_data *data);
+void	get_info_map(char *file, t_data *data);
+void	get_player_position(int height, t_data *data);
+void	filled_floor_or_ceiling(int fd, char *line, t_data *data, char c);
+bool	all_filled_up(t_data *data);
+
+// +------------------------------------------+ //
+//   Images initialization                      //
+// +------------------------------------------+ //
+void	init_img(t_data *data);
+
+// +------------------------------------------+ //
+//   PRINT                                      //
+// +------------------------------------------+ //
+void	print_parsing(t_data *data);
+
+// +------------------------------------------+ //
+//   Get colour utils                           //
+// +------------------------------------------+ //
+void	error_doublon_c_file(int fd, char *line, t_data *data);
+void	error_doublon_f_file(int fd, char *line, t_data *data);
+void	error_no_colour(int fd, char *line, t_data *data, int i);
 
 // +------------------------------------------+ //
 //   ERROR and FREE                             //

@@ -6,31 +6,13 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:01:18 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/13 13:36:42 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:09:51 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	error_doublon_c_file(int fd, char *line, t_data *data)
-{
-	if (data->texture->c_file)
-		ft_error_during_gnl(ERROR_ELEMENT_DOUBLON, fd, line, data);
-}
-
-static void	error_doublon_f_file(int fd, char *line, t_data *data)
-{
-	if (data->texture->f_file)
-		ft_error_during_gnl(ERROR_ELEMENT_DOUBLON, fd, line, data);
-}
-
-static void	error_no_colour(int fd, char *line, t_data *data, int i)
-{
-	if (i != 3)
-		ft_error_during_gnl(ERROR_NO_COLOUR, fd, line, data);
-}
-
-static int **malloc_colour(int fd, char *line, t_data *data, char c)
+static int	**malloc_colour(int fd, char *line, t_data *data, char c)
 {
 	int	i;
 
@@ -58,6 +40,28 @@ static int **malloc_colour(int fd, char *line, t_data *data, char c)
 	return (NULL);
 }
 
+static void	split_and_trim_colour(int fd, char *line, t_data *data)
+{
+	int		i;
+	char	*temp;
+
+	i = -1;
+	data->texture->temp = ft_split(&line[2], ',');
+	if (!data->texture->temp)
+		ft_error_during_gnl(ERROR_MALLOC, fd, line, data);
+	while (data->texture->temp[++i])
+	{
+		temp = data->texture->temp[i];
+		data->texture->temp[i] = ft_strtrim(data->texture->temp[i], " 	");
+		if (!data->texture->temp[i])
+		{
+			free(temp);
+			ft_error_during_gnl(ERROR_MALLOC, fd, line, data);
+		}
+		free(temp);
+	}
+}
+
 void	filled_floor_or_ceiling(int fd, char *line, t_data *data, char c)
 {
 	int	i;
@@ -65,9 +69,7 @@ void	filled_floor_or_ceiling(int fd, char *line, t_data *data, char c)
 
 	i = -1;
 	colour = malloc_colour(fd, line, data, c);
-	data->texture->temp = ft_split(&line[2], ',');
-	if (!data->texture->temp)
-		ft_error_during_gnl(ERROR_MALLOC, fd, line, data);
+	split_and_trim_colour(fd, line, data);
 	while (data->texture->temp[++i])
 	{
 		if (!ft_isnumber(data->texture->temp[i]))

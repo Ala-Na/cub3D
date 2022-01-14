@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anadege <anadege@student.42.fr>            +#+  +:+       +#+         #
+#    By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/23 15:04:29 by anadege           #+#    #+#              #
-#    Updated: 2022/01/13 17:47:17 by anadege          ###   ########.fr        #
+#    Updated: 2022/01/14 17:34:25 by fmonbeig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,14 @@ SRCS = 	main.c\
 		error_and_free.c\
 		check_file.c\
 		check_map.c\
-		get_element.c\
-		get_map.c\
-		get_colour.c\
 		check_map2.c\
+		get_element.c\
+		get_map_info.c\
+		malloc_map.c\
+		get_colour.c\
+		get_colour_utils.c\
+		init_img.c\
+		print.c\
 		$(SUB_SRCS_HOOKS) \
 		$(SUB_SRCS_RENDERING)
 

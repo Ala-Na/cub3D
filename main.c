@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:21:33 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 11:27:11 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 18:12:31 by fmonbeig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	security_init(t_data *data)
+static void	security_init(t_data *data)
 {
 	data->mlx = NULL;
 	data->screen_width = -1;
@@ -25,15 +25,30 @@ void	security_init(t_data *data)
 	data->img = NULL;
 }
 
+static void	init_malloc_structure(t_data *data)
+{
+	data->map_info = malloc(sizeof(t_map));
+	if (!data->map_info)
+		ft_error(ERROR_MALLOC, data);
+	data->player = malloc(sizeof(t_player));
+	if (!data->player)
+		ft_error(ERROR_MALLOC, data);
+	data->texture = malloc(sizeof(t_texture));
+	if (!data->texture)
+		ft_error(ERROR_MALLOC, data);
+	data->texture->no.img = NULL;
+	data->texture->so.img = NULL;
+	data->texture->ea.img = NULL;
+	data->texture->we.img = NULL;
+}
+
 static void	init_data(t_data *data)
 {
 	security_init(data);
-	data->mlx = mlx_init(); 
+	data->mlx = mlx_init();
 	if (data->mlx == NULL)
 		ft_error(ERROR_MLX, data);
-	data->map_info = malloc(sizeof(t_map));
-	data->texture = malloc(sizeof(t_texture));
-	data->player = malloc(sizeof(t_player));
+	init_malloc_structure(data);
 	data->map_info->height = 0;
 	data->map_info->width = 0;
 	data->texture->no_file = 0;
@@ -48,34 +63,6 @@ static void	init_data(t_data *data)
 	data->player->dir.y = 0;
 }
 
-static void	init_img(t_data *data)
-{
-	data->texture->no.img = mlx_xpm_file_to_image(data->mlx, data->texture->no_file,
-			&data->texture->no.width, &data->texture->no.height);
-	data->texture->no.addr = mlx_get_data_addr(data->texture->no.img, &data->texture->no.bits_per_pixel,
-			&data->texture->no.line_length, &data->texture->no.endian);
-	if(!data->texture->no.img)
-		ft_error(ERROR_IMG, data);
-	data->texture->so.img = mlx_xpm_file_to_image(data->mlx, data->texture->so_file,
-			&data->texture->so.width, &data->texture->so.height);
-	data->texture->so.addr = mlx_get_data_addr(data->texture->so.img, &data->texture->so.bits_per_pixel,
-			&data->texture->so.line_length, &data->texture->so.endian);
-	if(!data->texture->so.img)
-		ft_error(ERROR_IMG, data);
-	data->texture->ea.img = mlx_xpm_file_to_image(data->mlx, data->texture->ea_file,
-			&data->texture->ea.width, &data->texture->ea.height);
-	data->texture->ea.addr = mlx_get_data_addr(data->texture->ea.img, &data->texture->ea.bits_per_pixel,
-			&data->texture->ea.line_length, &data->texture->ea.endian);
-	if(!data->texture->ea.img)
-		ft_error(ERROR_IMG, data);
-	data->texture->we.img = mlx_xpm_file_to_image(data->mlx, data->texture->we_file,
-			&data->texture->we.width, &data->texture->we.height);
-	data->texture->we.addr = mlx_get_data_addr(data->texture->we.img, &data->texture->we.bits_per_pixel,
-			&data->texture->we.line_length, &data->texture->we.endian);
-	if(!data->texture->we.img)
-		ft_error(ERROR_IMG, data);
-}
-
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -88,11 +75,8 @@ int	main(int argc, char **argv)
 		check_map(&data);
 		init_img(&data);
 		launch_engine(&data);
-		free_everything(&data);
 	}
 	else
 		ft_putstr(ERROR_NB_ARGUMENT);
 	return (0);
 }
-
-//TODO Je crois qu'il faut proteger la minilibx car segfault si porgramme lancer avec un env vide (env -i)

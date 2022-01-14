@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 11:37:39 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 16:50:19 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct  s_ray
     double  wall_dist;
     t_ivec  step;
     int     side;
+	int		wall_height;
 }   t_ray;
 
 typedef struct  s_stripe
@@ -157,6 +158,8 @@ typedef int	t_bool;
 # define ERROR_IMG				"ERROR\nMlx image error\n"
 # define ERROR_MLX				"ERROR\nMlx can't be launched\n"
 # define ERROR_PIXEL			"ERROR\nPixel outside screen's limits\n"
+# define ERROR_WINDOW			"ERROR\nMlx window can't be launched\n"
+# define ERROR_CALCULATION		"ERROR\nError in calculation\n"
 
 // Define for maths calculations
 # define PI 3.1415926535
@@ -210,6 +213,7 @@ void    convert_floor_and_ceiling_colors(t_data *data);
 //   Raycasting 'flat' rendering                //
 // +------------------------------------------+ //
 void	raycasting_algorithm(t_data *data, t_img *img);
+void	calculate_distance_deltas(t_data *data, t_img *img, t_ray *ray);
 int		init_differential_diagnosis_analysis(t_data *data, t_ray *ray);
 int		differential_diagnosis_analysis(t_ray *ray, char **map);
 int		calculate_wall_height(t_ray *ray, int screen_height);
@@ -217,18 +221,19 @@ int		calculate_wall_height(t_ray *ray, int screen_height);
 // +------------------------------------------+ //
 //   Raycasting 'textured' rendering            //
 // +------------------------------------------+ //
-void	raycast_textured_wall(t_data *data, t_ray *ray, int wall_height, t_img *img);
+void	raycast_textured_wall(t_data *data, t_ray *ray, t_img *img);
 t_img   *get_corresponding_texture(t_data *data, t_ray *ray);
 int		get_texture_x_coordinate(t_player *player, t_img *texture, t_ray *ray);
-void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, int wall_height, t_img *img);
+void    show_textured_wall(t_data *data, t_ray *ray, t_stripe *stripe, t_img *img);
 int		get_corresponding_pixel_color(t_stripe *stripe, t_img *texture, double scale);
 
 // +------------------------------------------+ //
 //   Functions for mlx manipulation             //
 // +------------------------------------------+ //
-int		convert_RGB_to_int(int t, int r, int g, int b);
+int		convert_rgb_to_int(int t, int r, int g, int b);
 t_img	*generate_new_empty_image(t_data *data, int width, int height);
 void    fill_img_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixel_color);
+void	bitshifting_depending_on_endian(int endian, t_img *img, unsigned int pixel_color, int pixel_pos);
 
 // +------------------------------------------+ //
 //   Functions hooks, shifts and rotations      //

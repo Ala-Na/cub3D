@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 11:21:54 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:37:39 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef int	t_bool;
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
 # define ERROR_IMG				"ERROR\nMlx image error\n"
 # define ERROR_MLX				"ERROR\nMlx can't be launched\n"
+# define ERROR_PIXEL			"ERROR\nPixel outside screen's limits\n"
 
 // Define for maths calculations
 # define PI 3.1415926535

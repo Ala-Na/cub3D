@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 14:29:57 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/14 11:12:12 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:34:08 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    modify_map(t_data *data)
     int j;
 
     i = -1;
-	while (data->map[++i])
+	while (data->map && data->map[++i])
 	{
 		j = -1;
 		while(data->map[i][++j])
@@ -47,11 +47,6 @@ void    launch_engine(t_data *data)
     mlx_get_screen_size(data->mlx, &(data->screen_width), &(data->screen_height));
     data->win = mlx_new_window(data->mlx, data->screen_width, data->screen_height, "Cub3D");
     new_img = generate_new_empty_image(data, data->screen_width, data->screen_height);
-    if (new_img->img == NULL)
-    {
-        printf("ERROR EXIT\n");
-        return; //TODO ADD ERROR, FREE MLX AND WIN
-    }
     data->img = new_img;
     raycasting_algorithm(data, new_img);
     mlx_put_image_to_window(data->mlx, data->win, new_img->img, 0, 0);

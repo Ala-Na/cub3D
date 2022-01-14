@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:02:38 by anadege           #+#    #+#             */
-/*   Updated: 2022/01/14 11:20:58 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:40:46 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,16 @@ t_img    *generate_new_empty_image(t_data *data, int width, int height)
     
     image = malloc(sizeof(*image));
     if (image == NULL)
-        return NULL; //TODO ERROR MSG
+        ft_error(ERROR_MALLOC, data);
     image->mlx = data->mlx;
     image->width = width;
     image->height = height;
     image->img = mlx_new_image(data->mlx, image->width, image->height);
     if (image->img == NULL)
-        return NULL; //TODO ADD ERROR
+    {
+        free(image);
+        ft_error(ERROR_IMG, data);
+    }
     image->addr = mlx_get_data_addr(image->img, &(image->bits_per_pixel), &(image->line_length), &(image->endian));
     return image;
 }
@@ -59,7 +62,11 @@ void    fill_img_buffer(t_data *data, t_img *img, t_ivec *pos, unsigned int pixe
     if (img->bits_per_pixel != 32)
             pixel_color =  mlx_get_color_value(img->mlx, pixel_color);
     if (pos->x < 0 || pos->y < 0 || pos->x >= data->screen_width || pos->y >= data->screen_height)
-        return; //TODO ERROR OUTSIDE SCREEN
+    {
+        mlx_destroy_image(data->mlx, img->img);
+        free(img);
+        ft_error(ERROR_PIXEL, data);
+    }
     pixel_pos = (pos->y * img->line_length) + (pos->x * 4);
     if (img->endian == 1)
     {

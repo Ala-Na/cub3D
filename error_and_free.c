@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:43:15 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 11:30:38 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/14 11:32:39 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
  * ft_error : send a error message and exit the program properly.
  * 			if NULL is pass to error_message, we use perror instead.
 ***/
-
 void	ft_error(char *error_message, t_data *data)
 {
 	if (!error_message)

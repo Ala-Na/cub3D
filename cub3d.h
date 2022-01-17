@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 22:58:03 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/17 10:53:56 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ typedef struct s_stripe
 # define ERROR_MAP_WRONG_ELE	"ERROR\nMap have wrong element\n"
 # define ERROR_TWO_PLAYERS		"ERROR\nMap have more than one player\n"
 # define ERROR_NO_PLAYER		"ERROR\nNo player, No game :(\n"
-# define ERROR_DIRECTORY		"ERROR\nOops... the file is a directory\n"
+# define ERROR_INCORRECT		"ERROR\nOops... the file path is incorrect\n"
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
 # define ERROR_IMG				"ERROR\nMlx image error\n"
 # define ERROR_MLX				"ERROR\nMlx can't be launched\n"

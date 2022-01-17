@@ -6,7 +6,7 @@
 /*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:35:08 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/14 18:10:26 by fmonbeig         ###   ########.fr       */
+/*   Updated: 2022/01/17 10:54:20 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ static void	get_map_width(char *line, t_data *data)
 	}
 }
 
-static void	file_is_a_directory(char *file, t_data *data)
+static void	file_is_incorrect(char *file, t_data *data)
 {
 	int	fd;
 
 	fd = open(file, O_WRONLY);
 	if (fd < 0)
-	{
-		close(fd);
-		ft_error(ERROR_DIRECTORY, data);
-	}
+		ft_error(ERROR_INCORRECT, data);
 	close(fd);
 }
 
@@ -55,7 +52,7 @@ void	get_info_map(char *file, t_data *data)
 	char	*line;
 
 	ret = 1;
-	file_is_a_directory(file, data);
+	file_is_incorrect(file, data);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		ft_error(NULL, data);

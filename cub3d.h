@@ -6,7 +6,7 @@
 /*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:22:43 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/17 10:53:56 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/17 11:42:22 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,15 @@ typedef struct s_stripe
 # define ERROR_MAP_WRONG_ELE	"ERROR\nMap have wrong element\n"
 # define ERROR_TWO_PLAYERS		"ERROR\nMap have more than one player\n"
 # define ERROR_NO_PLAYER		"ERROR\nNo player, No game :(\n"
-# define ERROR_INCORRECT		"ERROR\nOops... the file path is incorrect\n"
+# define ERROR_INCORRECT "ERROR\nThe file path or permissions are incorrect\n"
 # define ERROR_MALLOC			"ERROR\nMalloc failed\n"
 # define ERROR_IMG				"ERROR\nMlx image error\n"
 # define ERROR_MLX				"ERROR\nMlx can't be launched\n"
 # define ERROR_PIXEL			"ERROR\nPixel outside screen's limits\n"
 # define ERROR_WINDOW			"ERROR\nMlx window can't be launched\n"
 # define ERROR_CALCULATION		"ERROR\nError in calculation\n"
+# define ERROR_DIRECTORY		"ERROR\nFile is a directory\n"
+# define ERROR_READ				"ERROR\nFile can't be read\n"
 
 // Define for maths calculations
 # define PI		3.1415926535

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmonbeig <fmonbeig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anadege <anadege@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 17:35:08 by fmonbeig          #+#    #+#             */
-/*   Updated: 2022/01/17 10:54:20 by anadege          ###   ########.fr       */
+/*   Updated: 2022/01/17 11:37:56 by anadege          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,19 @@ static void	get_map_width(char *line, t_data *data)
 
 static void	file_is_incorrect(char *file, t_data *data)
 {
-	int	fd;
+	int		fd;
+	void	*buf;
 
-	fd = open(file, O_WRONLY);
+	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		ft_error(ERROR_INCORRECT, data);
+	if (read(fd, &buf, 1) == -1)
+	{
+		close(fd);
+		if (errno == EISDIR)
+			ft_error(ERROR_DIRECTORY, data);
+		ft_error(ERROR_READ, data);
+	}
 	close(fd);
 }
 
